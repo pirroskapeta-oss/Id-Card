@@ -3,131 +3,125 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Pirro Skapeta - Skapeta Apartments</title>
+    <title>Skapeta Apartments | Pirro Skapeta</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;600&display=swap" rel="stylesheet">
     <style>
-        body { margin: 0; overflow: hidden; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        #webgl-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
+        body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; font-family: 'Inter', sans-serif; background: #e0d0b0; }
+        #canvas-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
 
-        .content-container {
-            position: absolute;
-            bottom: 30px; /* Vendos butonat te pjesa e reres */
-            left: 0;
-            width: 100%;
+        .wrapper {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 20px;
+            justify-content: space-between;
+            height: 100vh;
+            padding: 40px 20px;
+            box-sizing: border-box;
+            color: white;
             z-index: 10;
         }
 
+        /* Headeri (Emri dhe Biznesi) */
         .header-info {
             text-align: center;
-            color: #fff;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-            margin-bottom: 20px;
+            opacity: 0;
+            animation: fadeInDown 1s ease-out forwards;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            margin-top: 20px;
         }
 
-        .header-info h1 { margin: 0; font-size: 24px; }
-        .header-info p { margin: 5px 0 0; font-size: 16px; opacity: 0.9; }
+        .header-info h1 { margin: 0; font-size: 26px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; }
+        .header-info p { margin: 8px 0 0; font-size: 16px; font-weight: 300; opacity: 0.9; }
 
+        /* Containeri i Guackave (mbi rërë) */
+        .links-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+            max-width: 300px;
+            margin-bottom: 30px;
+        }
+
+        /* Stili bazë i Guackës */
         .shell-btn {
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 280px;
-            height: 70px;
             text-decoration: none;
-            color: #333;
-            font-weight: bold;
-            font-size: 16px;
-            position: relative;
+            color: #3e2e1e;
+            font-weight: 600;
+            font-size: 15px;
+            height: 70px;
             cursor: pointer;
-            transition: transform 0.2s ease;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            position: relative;
+            transition: 0.3s all ease;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.2), inset 0 2px 5px rgba(255,255,255,0.5);
+            
+            /* Efekti i shkëlqimit perlor (pearlescent) */
+            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            border: 1px solid rgba(255,255,255,0.4);
+            
+            /* Vija natyrale të guackës */
+            background-image: repeating-linear-gradient(15deg, rgba(160,140,110,0.1), rgba(160,140,110,0.1) 1px, transparent 1px, transparent 15px);
+            
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out forwards;
         }
 
-        .shell-btn:active {
-            transform: translateY(2px) scale(0.98);
-        }
+        .shell-btn span { z-index: 2; position: relative; }
 
-        /* Stilet specifike per 3 guackat e ndryshme */
-        .shell-1 {
-            background: #fff5e6;
-            border-radius: 60% 40% 70% 30% / 50% 60% 40% 50%; /* Formë asimetrike 1 */
-            border: 2px solid #e0cda9;
-        }
+        /* Forma unike për secilën guackë (asimetrike) */
+        .shell-1 { border-radius: 70% 30% 60% 40% / 60% 70% 30% 40%; animation-delay: 1s; }
+        .shell-2 { border-radius: 30% 70% 30% 70% / 60% 40% 60% 40%; transform: rotate(2deg); animation-delay: 1.2s; }
+        .shell-3 { border-radius: 60% 60% 15px 15px; transform: rotate(-1deg); animation-delay: 1.4s; }
 
-        .shell-2 {
-            background: #fdf2d9;
-            border-radius: 30% 70% 30% 70% / 60% 40% 60% 40%; /* Formë asimetrike 2 */
-            border: 2px solid #e9d9b0;
-        }
+        .shell-btn:active { transform: translateY(3px) scale(0.97) rotate(0deg); box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .shell-btn:hover { background: #fff; box-shadow: 0 10px 20px rgba(0,0,0,0.25); }
 
-        .shell-3 {
-            background: #fff0d4;
-            border-radius: 50% 50% 10px 10px; /* Formë si fanelë 3 */
-            border: 2px solid #f1e0bf;
-        }
+        /* Animacionet e hyrjes */
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Teksturat e vijave te guackave */
-        .shell-btn::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image: 
-                linear-gradient(15deg, rgba(224,205,169,0.3) 1px, transparent 1px),
-                linear-gradient(165deg, rgba(224,205,169,0.3) 1px, transparent 1px);
-            background-size: 20px 20px;
-            border-radius: inherit;
-        }
-
-        .btn-text {
-            z-index: 1;
-            text-shadow: 0 1px 1px rgba(255,255,255,0.8);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        /* Ikonat (per thjeshtesi po perdorim emoji, mund te zevendesohen me SVG) */
-        .icon { font-size: 1.2em; }
     </style>
 </head>
 <body>
 
-    <canvas id="webgl-canvas"></canvas>
+    <div id="canvas-container"></div>
 
-    <div class="content-container">
+    <div class="wrapper">
         <div class="header-info">
             <h1>Pirro Skapeta</h1>
             <p>Skapeta Apartments</p>
         </div>
 
-        <a href="https://www.instagram.com/pirro_skapeta/" target="_blank" class="shell-btn shell-1">
-            <span class="btn-text"><span class="icon">👤</span> Instagram: pirro_skapeta</span>
-        </a>
+        <div class="links-container">
+            <a href="https://www.instagram.com/pirro_skapeta/" target="_blank" class="shell-btn shell-1">
+                <span>Instagram: pirro_skapeta</span>
+            </a>
 
-        <a href="https://www.instagram.com/skapetaapartments/" target="_blank" class="shell-btn shell-2">
-            <span class="btn-text"><span class="icon">🏠</span> Skapeta Apartments</span>
-        </a>
+            <a href="https://www.instagram.com/skapetaapartments/" target="_blank" class="shell-btn shell-2">
+                <span>Skapeta Apartments</span>
+            </a>
 
-        <a href="https://wa.me/355693227207" target="_blank" class="shell-btn shell-3">
-            <span class="btn-text"><span class="icon">💬</span> WhatsApp</span>
-        </a>
+            <a href="https://wa.me/355693227207" target="_blank" class="shell-btn shell-3">
+                <span>WhatsApp: +355 69 322 7207</span>
+            </a>
+        </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     
     <script>
-        // --- Setup Bazë e Three.js ---
-        const canvas = document.getElementById('webgl-canvas');
-        const renderer = new THREE.WebGLRenderer({canvas, antialias: true});
+        const container = document.getElementById('canvas-container');
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
+        container.appendChild(renderer.domElement);
+
         const scene = new THREE.Scene();
         const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
 
-        // --- Shaderi i Ujit (Kryen magjinë) ---
-        // Ky shader përdor foton tënde dhe aplikon valëzim matematik
+        // --- Shaderi i Detit dhe Rërës (Krijuar nga e para) ---
         const vertexShader = `
             varying vec2 vUv;
             void main() {
@@ -137,83 +131,108 @@
         `;
 
         const fragmentShader = `
-            uniform sampler2D tBeach;
             uniform float uTime;
             uniform vec2 uMouse;
             uniform float u_time_since_click;
             uniform float u_wave_burst;
             varying vec2 vUv;
 
+            // Funksion i thjeshtë pseudorandom
+            float random (vec2 st) {
+                return fract(sin(dot(st.xy, vec2(12.9898,78.233)))*43758.5453123);
+            }
+
+            // Funksion Noise për teksturën e rërës dhe ujit
+            float noise (in vec2 st) {
+                vec2 i = floor(st);
+                vec2 f = fract(st);
+                float a = random(i);
+                float b = random(i + vec2(1.0, 0.0));
+                float c = random(i + vec2(0.0, 1.0));
+                float d = random(i + vec2(1.0, 1.0));
+                vec2 u = f*f*(3.0-2.0*f);
+                return mix(a, b, u.x) + (c - a)*u.y*(1.0 - u.x) + (d - b)*u.x*u.y;
+            }
+
             void main() {
                 vec2 uv = vUv;
-                vec2 mouse = uMouse;
                 
-                // --- Efekti i Prekjes (Valë rrethore) ---
-                float dist = distance(uv, mouse);
-                float ripple = sin((dist - u_time_since_click * 0.5) * 40.0) * 0.5 + 0.5;
-                ripple *= max(0.0, 1.0 - u_time_since_click * 1.5); // Zhduket me kalimin e kohes
+                // --- KRIJIMI I RËRËS (Pjesa e poshtme) ---
+                vec3 sandColor = mix(vec3(0.92, 0.82, 0.65), vec3(0.88, 0.78, 0.60), noise(uv * 50.0));
                 
-                // Përcakto zonën e ujit (pjesa e sipërme 60% e fotos)
-                float waterMask = smoothstep(0.4, 0.42, uv.y);
+                // --- KRIJIMI I UJIT (Pjesa e sipërme) ---
+                // Ngjyrat elitare të detit (nga bruz në blu të thellë)
+                vec3 waterColorDeep = vec3(0.0, 0.25, 0.4);
+                vec3 waterColorShallow = vec3(0.0, 0.6, 0.65);
                 
-                // --- Dinamika e Ujit Të Përgjithshëm ---
-                vec2 distortion = vec2(
-                    sin(uv.y * 10.0 + uTime * 1.0) * 0.005,
-                    cos(uv.x * 10.0 + uTime * 1.5) * 0.003
-                );
+                // Përcakto kufirin e ujit dhe rërës (me një lakim natyral)
+                float waterSandLine = 0.45 + sin(uv.x * 3.0 + uTime * 0.2) * 0.03;
+                float waterMask = smoothstep(waterSandLine - 0.01, waterSandLine + 0.01, uv.y);
                 
-                // Shto deformimin e prekjes vetem nese eshte ne uje
-                distortion += (ripple * 0.01) * waterMask;
+                // Valëzimi procedural i ujit
+                float waterNoise = noise(uv * 15.0 + uTime * 0.5) * 0.1;
+                vec3 waterColor = mix(waterColorShallow, waterColorDeep, smoothstep(0.4, 1.0, uv.y) + waterNoise);
                 
-                // --- Efekti i Dallgës Çdo 5 Sekonda ---
-                // Një dallgë më e fortë që vjen nga lart poshtë
-                float bigWave = sin((uv.y - u_wave_burst * 0.4) * 20.0) * 0.02 * waterMask;
-                bigWave *= smoothstep(0.0, 0.5, u_wave_burst) * smoothstep(2.5, 0.0, u_wave_burst); // Hyrje-Dalle e bute
-                distortion.y += bigWave;
-
-                // Apliko deformimin te fotoja
-                gl_FragColor = texture2D(tBeach, uv + distortion);
+                // --- Dinamika e Interaksionit (Prekja) ---
+                float dist = distance(uv, uMouse);
+                float ripple = sin((dist - u_time_since_click * 0.6) * 35.0) * 0.5 + 0.5;
+                ripple *= max(0.0, 1.0 - u_time_since_click * 1.8); // Zhduket
+                ripple *= waterMask; // Vetëm në ujë
+                
+                // Shto shkëlqimin e valëve rrethore
+                waterColor += vec3(ripple * 0.15);
+                
+                // --- Dallga 5-Sekondëshe ---
+                float bigWavePos = (uv.y - u_wave_burst * 0.4);
+                float bigWave = sin(bigWavePos * 25.0) * 0.03;
+                // E bën dallgën të shkumëzojë pak
+                float foam = smoothstep(0.02, 0.0, abs(bigWavePos));
+                
+                // Apliko dallgën vetëm kur vjen drejt rërës
+                float bigWaveMask = smoothstep(0.0, 0.6, u_wave_burst) * smoothstep(2.0, 0.0, u_wave_burst);
+                bigWaveMask *= waterMask; // Vetëm në ujë
+                
+                waterColor += (foam * bigWaveMask) * 0.1; // Shto pak bardhësi shkume
+                waterColor += (bigWave * bigWaveMask) * 0.05; // Zhvendosje e lehtë
+                
+                // --- Shkuma e Bregut ---
+                float shoreLine = smoothstep(waterSandLine - 0.02, waterSandLine + 0.02, uv.y);
+                vec3 shoreFoam = vec3(0.95, 0.98, 1.0) * noise(uv * 60.0 + uTime * 0.5);
+                shoreFoam *= smoothstep(0.1, 0.0, abs(uv.y - waterSandLine)); // E kufizuar te bregu
+                
+                // --- PËRZIERJA PËRFUNDIMTARE ---
+                vec3 finalColor = mix(sandColor, waterColor, waterMask);
+                finalColor += shoreFoam; // Shto shkumën e bregut
+                
+                gl_FragColor = vec4(finalColor, 1.0);
             }
         `;
 
-        // --- Ngarkimi i Fotos Sënde si Teksturë ---
-        // Kjo URL është fotoja që dërgove, e ruajtur përkohësisht.
-        const loader = new THREE.TextureLoader();
-        const beachTexture = loader.load('https://i.imgur.com/8xV4T7t.jpg'); // URL e fotos tende
-        beachTexture.wrapS = beachTexture.wrapT = THREE.RepeatWrapping;
-
         const uniforms = {
-            tBeach: { value: beachTexture },
             uTime: { value: 0 },
-            uMouse: { value: new THREE.Vector2(-1, -1) }, // Jashtë ekranit fillimisht
-            u_time_since_click: { value: 999 }, // Shumë larg që mos duket fillimisht
+            uMouse: { value: new THREE.Vector2(-1, -1) },
+            u_time_since_click: { value: 999 },
             u_wave_burst: { value: 0 }
         };
 
-        const material = new THREE.ShaderMaterial({
-            uniforms,
-            vertexShader,
-            fragmentShader,
-        });
-
+        const material = new THREE.ShaderMaterial({ uniforms, vertexShader, fragmentShader });
         const geometry = new THREE.PlaneGeometry(2, 2);
         const mesh = new THREE.Mesh(geometry, material);
         scene.add(mesh);
 
-        // --- Animacioni ---
+        // --- Animacioni & Logjika ---
         let lastClickTime = 0;
         let lastWaveBurstTime = 0;
         const clock = new THREE.Clock();
 
         function animate() {
             requestAnimationFrame(animate);
-            const delta = clock.getDelta();
             const elapsedTime = clock.getElapsedTime();
             
             uniforms.uTime.value = elapsedTime;
             uniforms.u_time_since_click.value = (performance.now() - lastClickTime) / 1000.0;
             
-            // Logjika për dallgën çdo 5 sekonda
+            // Dallga automatike çdo 5 sekonda
             if (elapsedTime - lastWaveBurstTime > 5.0) {
                 lastWaveBurstTime = elapsedTime;
             }
@@ -223,27 +242,23 @@
         }
         animate();
 
-        // --- Interaksioni (Prekja e Ujit) ---
+        // --- Interaksioni (Prekja) ---
         function handleInteraction(event) {
             event.preventDefault(); // Parandalon skrollimin ne telefon kur preket uji
-            
             const x = (event.touches ? event.touches[0].clientX : event.clientX) / window.innerWidth;
             const y = 1.0 - (event.touches ? event.touches[0].clientY : event.clientY) / window.innerHeight;
             
-            // Regjistro vendndodhjen dhe kohën e klikimit
             uniforms.uMouse.value.set(x, y);
             lastClickTime = performance.now();
         }
 
-        // Dëgjo për klikime (mouse) dhe prekje (touch)
-        canvas.addEventListener('mousedown', handleInteraction);
-        canvas.addEventListener('touchstart', handleInteraction, {passive: false});
+        renderer.domElement.addEventListener('mousedown', handleInteraction);
+        renderer.domElement.addEventListener('touchstart', handleInteraction, {passive: false});
 
-        // --- Përshtatja e Madhësisë së Dritares ---
+        // --- Përshtatja e dritares ---
         window.addEventListener('resize', () => {
             renderer.setSize(window.innerWidth, window.innerHeight);
         });
     </script>
 </body>
 </html>
-
