@@ -8,10 +8,10 @@
 <style>
 body{
 margin:0;
-overflow:hidden;
-font-family:sans-serif;
-color:white;
 background:black;
+overflow:hidden;
+color:white;
+font-family:sans-serif;
 }
 
 /* VIDEO */
@@ -25,13 +25,19 @@ object-fit:cover;
 z-index:-2;
 }
 
-/* OVERLAY */
-.overlay-bg{
-position:fixed;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.4);
-z-index:-1;
+/* BUTTON START */
+.start{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+background:white;
+color:black;
+padding:15px 30px;
+border-radius:30px;
+font-size:18px;
+cursor:pointer;
+z-index:10;
 }
 
 /* TEXT */
@@ -42,11 +48,6 @@ width:100%;
 text-align:center;
 }
 
-h1{
-font-size:45px;
-}
-
-/* BUTTONS */
 .shells{
 position:absolute;
 bottom:40px;
@@ -57,8 +58,8 @@ gap:20px;
 }
 
 .shell{
-width:90px;
-height:90px;
+width:80px;
+height:80px;
 background:white;
 border-radius:50%;
 display:flex;
@@ -73,12 +74,11 @@ cursor:pointer;
 
 <body>
 
-<!-- VIDEO (E SIGURT) -->
-<video autoplay muted loop playsinline>
+<div class="start" onclick="startVideo()">Kliko për të hyrë</div>
+
+<video id="vid" loop muted playsinline>
 <source src="https://cdn.coverr.co/videos/coverr-waves-hitting-the-shore-1602/1080p.mp4" type="video/mp4">
 </video>
-
-<div class="overlay-bg"></div>
 
 <div class="container">
 <h1>Pirro Skapeta</h1>
@@ -92,6 +92,12 @@ cursor:pointer;
 </div>
 
 <script>
+function startVideo(){
+let v=document.getElementById("vid");
+v.play();
+document.querySelector(".start").style.display="none";
+}
+
 function openLink(url){
 window.open(url,"_blank");
 }
