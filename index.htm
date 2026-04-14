@@ -5,156 +5,138 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pirro Skapeta</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap');
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
+
     body {
-      font-family: 'Inter', sans-serif;
       height: 100vh;
       overflow: hidden;
-      background: #0a2a3f;
-    }
-
-    .background {
-      position: fixed;
-      inset: 0;
-      background: url('https://source.unsplash.com/random/2000x1200/?turquoise-ocean-waves') center/cover no-repeat;
-      filter: brightness(0.93) saturate(1.1);
-      z-index: -2;
-      animation: gentleWave 50s linear infinite;
-    }
-
-    .overlay {
-      position: fixed;
-      inset: 0;
-      background: linear-gradient(to bottom, rgba(10, 50, 80, 0.3), rgba(10, 30, 60, 0.5));
-      z-index: -1;
-    }
-
-    .container {
-      position: relative;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      padding: 50px 20px 40px;
-      z-index: 2;
-    }
-
-    .top-card {
-      background: rgba(255, 255, 255, 0.14);
-      backdrop-filter: blur(24px);
-      border-radius: 28px;
-      padding: 40px 25px;
-      text-align: center;
-      border: 1px solid rgba(255,255,255,0.25);
-      max-width: 420px;
-      margin: 0 auto;
-      box-shadow: 0 12px 40px rgba(0,0,0,0.4);
-    }
-
-    .name {
+      background: #000;
       font-family: 'Playfair Display', serif;
-      font-size: 2.9rem;
-      color: #fff;
-      text-shadow: 0 4px 15px rgba(0,0,0,0.5);
-      margin-bottom: 12px;
+      color: white;
+      position: relative;
     }
 
-    .title { 
-      font-size: 1.18rem; 
-      color: rgba(255,255,255,0.95); 
-      margin-bottom: 8px; 
-    }
-    .phone { 
-      font-size: 1.22rem; 
-      color: rgba(255,255,255,0.92); 
-      font-weight: 500; 
+    /* Yjet në sfond */
+    .stars {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: transparent;
+      z-index: 1;
     }
 
-    .bottom-card {
-      background: rgba(255, 255, 255, 0.13);
-      backdrop-filter: blur(20px);
-      border-radius: 24px;
-      padding: 18px 15px;
-      max-width: 340px;
-      margin: 0 auto 30px;
-      border: 1px solid rgba(255,255,255,0.2);
-      box-shadow: 0 10px 35px rgba(0,0,0,0.35);
-    }
-
-    .shells {
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-    }
-
-    .shell {
+    /* Emri lart */
+    .name {
+      position: absolute;
+      top: 15%;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 3.8rem;
+      letter-spacing: 4px;
       text-align: center;
-      transition: transform 0.4s ease;
-      cursor: pointer;
+      z-index: 10;
+      text-shadow: 0 0 30px rgba(255,255,255,0.6);
+      white-space: nowrap;
     }
 
-    .shell img {
-      width: 58px;
-      height: 58px;
-      filter: drop-shadow(0 6px 12px rgba(0,0,0,0.5));
+    /* UFO që lëviz */
+    .ufo {
+      position: absolute;
+      font-size: 3.5rem;
+      z-index: 5;
+      animation: ufoFly 25s linear infinite;
+      filter: drop-shadow(0 0 20px #00ffcc);
+    }
+
+    @keyframes ufoFly {
+      0%   { transform: translate(-150px, 80vh) rotate(-15deg); }
+      100% { transform: translate(120vw, -100px) rotate(15deg); }
+    }
+
+    /* Butonat poshtë */
+    .buttons {
+      position: absolute;
+      bottom: 12%;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 35px;
+      z-index: 10;
+    }
+
+    .btn {
+      width: 68px;
+      height: 68px;
+      background: rgba(255,255,255,0.1);
+      border: 2px solid rgba(255,255,255,0.4);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.2rem;
+      backdrop-filter: blur(10px);
       transition: all 0.4s ease;
+      box-shadow: 0 0 20px rgba(255,255,255,0.2);
     }
 
-    .shell:hover img {
-      transform: scale(1.2) rotate(12deg);
+    .btn:hover {
+      transform: scale(1.15);
+      background: rgba(255,255,255,0.25);
+      border-color: #fff;
     }
 
-    .shell p {
-      color: #fff;
-      font-size: 0.8rem;
-      margin-top: 5px;
-      font-weight: 500;
-    }
-
-    @keyframes gentleWave {
-      0% { background-position: 0% 50%; }
-      100% { background-position: 100% 50%; }
-    }
-
-    @media (max-width: 480px) {
-      .name { font-size: 2.45rem; }
-      .top-card { padding: 32px 20px; }
+    /* Yjet që lëvizin (shumë yje) */
+    .star {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle 4s infinite alternate;
     }
   </style>
 </head>
 <body>
 
-  <div class="background"></div>
-  <div class="overlay"></div>
+  <div class="stars" id="stars"></div>
 
-  <div class="container">
-    <!-- Emri shumë lart -->
-    <div class="top-card">
-      <h1 class="name">Pirro Skapeta</h1>
-      <p class="title">Pronar i Skapeta Apartments</p>
-      <p class="phone">+355 69 203 3673</p>
-    </div>
+  <!-- Emri -->
+  <h1 class="name">Pirro Skapeta</h1>
 
-    <!-- Guaskat poshtë (më të vogla) -->
-    <div class="bottom-card">
-      <div class="shells">
-        <div class="shell" onclick="window.open('https://instagram.com/pirro_skapeta', '_blank')">
-          <img src="https://cdn-icons-png.flaticon.com/512/5968/5968890.png" alt="IG Personal">
-          <p>@pirro_skapeta</p>
-        </div>
-        <div class="shell" onclick="window.open('https://instagram.com/skapetaapartments', '_blank')">
-          <img src="https://cdn-icons-png.flaticon.com/512/5968/5968890.png" alt="IG Business">
-          <p>@skapetaapartments</p>
-        </div>
-        <div class="shell" onclick="window.open('https://wa.me/355693227207', '_blank')">
-          <img src="https://cdn-icons-png.flaticon.com/512/5968/5968958.png" alt="WhatsApp">
-          <p>069 322 7207</p>
-        </div>
-      </div>
-    </div>
+  <!-- UFO -->
+  <div class="ufo">🛸</div>
+
+  <!-- Butonat poshtë -->
+  <div class="buttons">
+    <div class="btn" onclick="window.open('https://instagram.com/pirro_skapeta', '_blank')">📷</div>
+    <div class="btn" onclick="window.open('https://instagram.com/skapetaapartments', '_blank')">📷</div>
+    <div class="btn" onclick="window.open('https://wa.me/355693227207', '_blank')">💬</div>
   </div>
+
+  <script>
+    // Krijo shumë yje
+    function createStars() {
+      const starsContainer = document.getElementById('stars');
+      for (let i = 0; i < 350; i++) {
+        const star = document.createElement('div');
+        star.classList.add('star');
+        
+        const size = Math.random() * 3 + 1;
+        star.style.width = `${size}px`;
+        star.style.height = `${size}px`;
+        
+        star.style.left = `${Math.random() * 100}vw`;
+        star.style.top = `${Math.random() * 100}vh`;
+        
+        star.style.animationDelay = `-${Math.random() * 4}s`;
+        star.style.opacity = Math.random() * 0.8 + 0.4;
+        
+        starsContainer.appendChild(star);
+      }
+    }
+
+    createStars();
+  </script>
 
 </body>
 </html>
