@@ -3,189 +3,153 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Pirro Skapeta | Luxury ID</title>
+    <title>Skapeta Apartments | Elite ID</title>
     <style>
-        body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; font-family: 'Segoe UI', Roboto, sans-serif; }
-        #view { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
-
-        .ui-overlay {
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; font-family: 'Inter', -apple-system, sans-serif; }
+        #canvas-wrapper { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
+        
+        /* UI Overlay */
+        .interface {
             position: relative;
+            z-index: 10;
             height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: space-between;
-            padding: 40px 20px;
+            padding: 60px 20px;
             box-sizing: border-box;
             pointer-events: none;
         }
 
-        .header {
+        .header-brand {
             text-align: center;
-            color: white;
-            text-shadow: 0 4px 10px rgba(0,0,0,0.5);
-            animation: fadeIn 1.5s ease;
+            color: #fff;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.4);
         }
 
-        .header h1 { margin: 0; font-size: 28px; letter-spacing: 2px; text-transform: uppercase; }
-        .header p { margin: 5px 0; font-weight: 300; opacity: 0.9; }
+        .header-brand h1 { margin: 0; font-size: 26px; font-weight: 300; letter-spacing: 5px; text-transform: uppercase; }
+        .header-brand div { width: 40px; height: 1px; background: #fff; margin: 15px auto; opacity: 0.6; }
+        .header-brand p { font-size: 13px; letter-spacing: 2px; text-transform: uppercase; opacity: 0.8; }
 
-        .button-container {
-            width: 100%;
-            max-width: 320px;
+        .links {
             display: flex;
             flex-direction: column;
-            gap: 25px;
-            margin-bottom: 20px;
+            gap: 20px;
+            width: 100%;
+            max-width: 290px;
             pointer-events: auto;
         }
 
-        .shell-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        /* Guackat Elitare - Dizajn Realist */
+        .shell-item {
+            position: relative;
+            background: rgba(255, 255, 255, 0.95);
             padding: 20px;
             text-decoration: none;
-            color: #4a3728;
+            color: #1a1a1a;
+            font-size: 14px;
             font-weight: 600;
-            font-size: 15px;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2), inset 0 -5px 10px rgba(0,0,0,0.1);
-            background: linear-gradient(145deg, #fffcf5, #e6dcc5);
-            border: 1px solid #d4c8ac;
+            text-align: center;
+            letter-spacing: 1px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.5);
         }
 
-        /* Format e Guackave të Detit */
-        .shell-1 { border-radius: 50% 50% 40% 40% / 80% 80% 20% 20%; }
-        .shell-2 { border-radius: 30% 70% 40% 60% / 50% 30% 70% 50%; transform: rotate(2deg); }
-        .shell-3 { border-radius: 60% 40% 70% 30% / 30% 60% 40% 70%; transform: rotate(-1deg); }
+        /* Formë unike guackash organike */
+        .s1 { border-radius: 60% 40% 70% 30% / 50% 60% 40% 50%; }
+        .s2 { border-radius: 40% 60% 30% 70% / 60% 40% 60% 40%; transform: translateX(5px); }
+        .s3 { border-radius: 50% 50% 10% 10% / 60% 60% 40% 40%; transform: translateX(-5px); }
 
-        .shell-btn:active { transform: scale(0.95) translateY(5px); box-shadow: 0 5px 10px rgba(0,0,0,0.2); }
-        .shell-btn:hover { background: #ffffff; filter: brightness(1.05); }
-
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        .shell-item:hover { transform: scale(1.05) translateY(-5px); background: #fff; box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+        .shell-item:active { transform: scale(0.98); }
     </style>
 </head>
 <body>
 
-    <canvas id="view"></canvas>
+<div id="canvas-wrapper"></div>
 
-    <div class="ui-overlay">
-        <div class="header">
-            <h1>Pirro Skapeta</h1>
-            <p>Skapeta Apartments Owner</p>
-        </div>
-
-        <div class="button-container">
-            <a href="https://www.instagram.com/pirro_skapeta/" target="_blank" class="shell-btn shell-1">
-                Personal: @pirro_skapeta
-            </a>
-            <a href="https://www.instagram.com/skapetaapartments/" target="_blank" class="shell-btn shell-2">
-                Business: @skapetaapartments
-            </a>
-            <a href="https://wa.me/355693227207" target="_blank" class="shell-btn shell-3">
-                WhatsApp: +355 69 322 7207
-            </a>
-        </div>
+<div class="interface">
+    <div class="header-brand">
+        <h1>Pirro Skapeta</h1>
+        <div></div>
+        <p>Skapeta Apartments</p>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script>
-        const canvas = document.querySelector('#view');
-        const renderer = new THREE.WebGLRenderer({canvas, antialias: true});
-        renderer.setPixelRatio(window.devicePixelRatio);
-        
-        const scene = new THREE.Scene();
-        const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+    <div class="links">
+        <a href="https://www.instagram.com/pirro_skapeta/" target="_blank" class="shell-item s1">@pirro_skapeta</a>
+        <a href="https://www.instagram.com/skapetaapartments/" target="_blank" class="shell-item s2">@skapetaapartments</a>
+        <a href="https://wa.me/355693227207" target="_blank" class="shell-item s3">KONTAKTO NË WHATSAPP</a>
+    </div>
+</div>
 
-        const fragmentShader = `
-            uniform float uTime;
-            uniform vec2 uResolution;
-            uniform vec2 uMouse;
-            uniform float uRipple;
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/6.5.1/browser/pixi.min.js"></script>
 
-            // Simple noise for water/sand
-            float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123); }
-            float noise(vec2 p) {
-                vec2 i = floor(p); vec2 f = fract(p);
-                vec2 u = f*f*(3.0-2.0*f);
-                return mix(mix(hash(i + vec2(0,0)), hash(i + vec2(1,0)), u.x),
-                           mix(hash(i + vec2(0,1)), hash(i + vec2(1,1)), u.x), u.y);
-            }
+<script>
+    const wrapper = document.getElementById('canvas-wrapper');
+    const app = new PIXI.Application({
+        width: window.innerWidth,
+        height: window.innerHeight,
+        resolution: window.devicePixelRatio || 1,
+        autoResize: true,
+        transparent: true
+    });
+    wrapper.appendChild(app.view);
 
-            void main() {
-                vec2 uv = gl_FragCoord.xy / uResolution.xy;
-                
-                // Colors
-                vec3 sand = vec3(0.9, 0.8, 0.6) + noise(uv * 100.0) * 0.05;
-                vec3 water = vec3(0.0, 0.4, 0.5);
-                
-                // Dynamic Shoreline
-                float shore = 0.5 + sin(uv.x * 3.0 + uTime * 0.5) * 0.05;
-                
-                // Big Wave every 5 seconds
-                float waveCycle = mod(uTime, 5.0);
-                float waveFront = smoothstep(0.0, 1.0, waveCycle / 2.0) * 0.8;
-                shore -= smoothstep(waveFront - 0.1, waveFront, uv.y) * 0.1 * smoothstep(waveFront + 0.1, waveFront, uv.y);
+    // Ngarkimi i imazhit tënd
+    const texture = PIXI.Texture.from('f14f1baab6526414e64ccb137f95e974.jpg');
+    const bg = new PIXI.Sprite(texture);
+    
+    bg.anchor.set(0.5);
+    bg.x = app.screen.width / 2;
+    bg.y = app.screen.height / 2;
+    
+    // Përshtatja e imazhit që të mbulojë ekranin (Cover effect)
+    const ratio = Math.max(app.screen.width / bg.width, app.screen.height / bg.height);
+    bg.scale.set(ratio);
+    
+    app.stage.addChild(bg);
 
-                // Water Interaction (Ripples)
-                float dist = distance(uv, uMouse);
-                float ripple = sin(dist * 40.0 - uTime * 5.0) * 0.02 * smoothstep(0.3, 0.0, dist);
-                
-                float mask = smoothstep(shore - 0.05, shore + 0.05, uv.y + ripple);
-                
-                // Water depth effect
-                vec3 waterCol = mix(vec3(0.1, 0.6, 0.7), vec3(0.0, 0.2, 0.4), uv.y);
-                
-                // Foam line
-                float foam = smoothstep(0.02, 0.0, abs(uv.y - shore)) * 0.2;
-                
-                vec3 finalCol = mix(sand, waterCol + foam, mask);
-                
-                gl_FragColor = vec4(finalCol, 1.0);
-            }
-        `;
+    // KRIJIMI I DALLGËVE REALE (Displacement Map)
+    // Përdorim një teksturë uji për të krijuar lëvizjen
+    const displacementSprite = PIXI.Sprite.from('https://res.cloudinary.com/dg70sbebh/image/upload/v1582214708/displacement_map_repeat_v6yv9z.jpg');
+    displacementSprite.texture.baseTexture.wrapMode = PIXI.WRAP_MODES.REPEAT;
+    const displacementFilter = new PIXI.filters.DisplacementFilter(displacementSprite);
+    
+    // Filtri aplikohet vetëm te uji (pjesa e sipërme)
+    app.stage.addChild(displacementSprite);
+    bg.filters = [displacementFilter];
 
-        const geometry = new THREE.PlaneGeometry(2, 2);
-        const uniforms = {
-            uTime: { value: 0 },
-            uResolution: { value: new THREE.Vector2() },
-            uMouse: { value: new THREE.Vector2(-1, -1) }
-        };
+    displacementFilter.scale.x = 20;
+    displacementFilter.scale.y = 20;
 
-        const material = new THREE.ShaderMaterial({
-            uniforms,
-            vertexShader: `varying vec2 vUv; void main() { vUv = uv; gl_Position = vec4(position, 1.0); }`,
-            fragmentShader
-        });
+    // Animacioni i lëvizjes së ujit
+    app.ticker.add(() => {
+        displacementSprite.x += 0.4; // Shpejtësia e dallgëve
+        displacementSprite.y += 0.2;
+    });
 
-        const mesh = new THREE.Mesh(geometry, material);
-        scene.add(mesh);
+    // INTERAKSIONI: Prekja e ujit krijohet valëzim (Ripple)
+    window.addEventListener('pointerdown', () => {
+        displacementFilter.scale.x = 60;
+        displacementFilter.scale.y = 60;
+        setTimeout(() => {
+            displacementFilter.scale.x = 20;
+            displacementFilter.scale.y = 20;
+        }, 300);
+    });
 
-        function resize() {
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            uniforms.uResolution.value.set(window.innerWidth, window.innerHeight);
-        }
+    // Resize
+    window.addEventListener('resize', () => {
+        app.renderer.resize(window.innerWidth, window.innerHeight);
+        const newRatio = Math.max(app.screen.width / bg.width, app.screen.height / bg.height);
+        bg.scale.set(newRatio);
+        bg.x = app.screen.width / 2;
+        bg.y = app.screen.height / 2;
+    });
+</script>
 
-        window.addEventListener('resize', resize);
-        resize();
-
-        // Mouse/Touch Interaction
-        const handleMove = (e) => {
-            const x = (e.touches ? e.touches[0].clientX : e.clientX) / window.innerWidth;
-            const y = 1.0 - (e.touches ? e.touches[0].clientY : e.clientY) / window.innerHeight;
-            uniforms.uMouse.value.set(x, y);
-        };
-        window.addEventListener('mousemove', handleMove);
-        window.addEventListener('touchstart', handleMove);
-
-        function animate(t) {
-            uniforms.uTime.value = t / 1000;
-            renderer.render(scene, camera);
-            requestAnimationFrame(animate);
-        }
-        requestAnimationFrame(animate);
-    </script>
 </body>
 </html>
