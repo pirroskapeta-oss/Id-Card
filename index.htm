@@ -18,7 +18,7 @@
       color: white;
     }
 
-    /* Yjet që lëvizin ngadalë */
+    /* Yjet */
     .stars {
       position: absolute;
       inset: 0;
@@ -32,84 +32,82 @@
       box-shadow: 0 0 5px white;
     }
 
-    /* Emri lart majtas me neon jeshil */
+    /* Emri - më majtas me hapësirë */
     .name {
       position: absolute;
-      top: 15%;
-      left: 8%;
-      font-size: 2.65rem;
-      letter-spacing: 3px;
+      top: 18%;
+      left: 7%;
+      font-size: 2.55rem;
+      letter-spacing: 4px;
       color: #fff;
       text-shadow: 
         0 0 12px #00ff9d,
-        0 0 25px #00ff9d,
-        0 0 40px #00ff9d;
+        0 0 28px #00ff9d;
       z-index: 10;
+      white-space: nowrap;
     }
 
-    /* Butonat djathtas lart me neon */
+    /* Butonat - më djathtas pa prekur emrin */
     .buttons {
       position: absolute;
-      top: 15%;
-      right: 8%;
+      top: 17.5%;
+      right: 7%;
       display: flex;
-      gap: 14px;
+      gap: 16px;
       z-index: 10;
     }
 
     .btn {
       width: 58px;
       height: 58px;
-      background: rgba(0, 255, 150, 0.12);
+      background: rgba(0, 255, 150, 0.15);
       border: 3px solid #00ff9d;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.9rem;
+      font-size: 1.85rem;
       color: #00ff9d;
       backdrop-filter: blur(10px);
-      box-shadow: 0 0 18px rgba(0, 255, 150, 0.6);
+      box-shadow: 0 0 20px rgba(0, 255, 150, 0.6);
       transition: all 0.4s ease;
     }
 
     .btn:hover {
-      transform: scale(1.18);
-      box-shadow: 0 0 28px rgba(0, 255, 150, 0.9);
+      transform: scale(1.2);
+      box-shadow: 0 0 30px rgba(0, 255, 150, 0.9);
     }
 
-    /* UFO që lëviz poshtë majtas */
+    /* UFO */
     .ufo {
       position: absolute;
-      bottom: 32%;
+      bottom: 30%;
       left: 10%;
-      font-size: 3.4rem;
+      font-size: 3.3rem;
       z-index: 5;
       filter: drop-shadow(0 0 25px #00ffcc);
-      animation: ufoFly 26s linear infinite;
+      animation: ufoFly 25s linear infinite;
     }
 
     @keyframes ufoFly {
-      0%   { transform: translate(0, 0) rotate(-12deg); }
-      40%  { transform: translate(70px, -45px) rotate(18deg); }
-      100% { transform: translate(140px, -90px) rotate(-8deg); }
+      0%   { transform: translate(0, 0) rotate(-10deg); }
+      50%  { transform: translate(80px, -50px) rotate(20deg); }
+      100% { transform: translate(150px, -95px) rotate(-5deg); }
     }
 
-    /* Glob poshtë (Europë + Afrikë) */
+    /* Glob */
     .globe {
       position: absolute;
-      bottom: -22%;
+      bottom: -20%;
       left: 50%;
       transform: translateX(-50%);
-      width: 440px;
-      height: 440px;
+      width: 420px;
+      height: 420px;
       background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Earth_from_space.jpg/800px-Earth_from_space.jpg') center/cover no-repeat;
       border-radius: 50%;
-      box-shadow: 
-        0 0 90px rgba(0, 180, 255, 0.45),
-        inset 0 0 110px rgba(0,0,0,0.75);
+      box-shadow: 0 0 85px rgba(0, 180, 255, 0.45);
       z-index: 2;
-      opacity: 0.92;
+      opacity: 0.9;
     }
 
     .globe::after {
@@ -117,13 +115,12 @@
       position: absolute;
       inset: 0;
       border-radius: 50%;
-      background: radial-gradient(circle at 38% 35%, rgba(255,255,255,0.18), transparent 65%);
+      background: radial-gradient(circle at 40% 35%, rgba(255,255,255,0.2), transparent 70%);
     }
 
     @media (max-width: 480px) {
-      .name { font-size: 2.25rem; }
+      .name { font-size: 2.2rem; letter-spacing: 2px; }
       .btn { width: 52px; height: 52px; font-size: 1.7rem; }
-      .globe { width: 380px; height: 380px; bottom: -18%; }
     }
   </style>
 </head>
@@ -131,41 +128,35 @@
 
   <div class="stars" id="stars"></div>
 
-  <!-- Emri -->
   <h1 class="name">Pirro Skapeta</h1>
 
-  <!-- Butonat -->
   <div class="buttons">
     <div class="btn" onclick="window.open('https://instagram.com/pirro_skapeta', '_blank')">📷</div>
     <div class="btn" onclick="window.open('https://instagram.com/skapetaapartments', '_blank')">📷</div>
     <div class="btn" onclick="window.open('https://wa.me/355693227207', '_blank')">💬</div>
   </div>
 
-  <!-- UFO -->
   <div class="ufo">🛸</div>
-
-  <!-- Glob -->
   <div class="globe"></div>
 
   <script>
-    // Krijo shumë yje që lëvizin
     function createStars() {
       const container = document.getElementById('stars');
-      for (let i = 0; i < 620; i++) {
+      for (let i = 0; i < 580; i++) {
         const star = document.createElement('div');
         star.classList.add('star');
         
-        const size = Math.random() * 2.6 + 0.8;
+        const size = Math.random() * 2.5 + 0.7;
         star.style.width = `${size}px`;
         star.style.height = `${size}px`;
         
         star.style.left = `${Math.random() * 100}vw`;
         star.style.top = `${Math.random() * 100}vh`;
         
-        const duration = Math.random() * 48 + 32;
+        const duration = Math.random() * 45 + 30;
         star.style.animation = `moveStar ${duration}s linear infinite`;
         
-        star.style.opacity = Math.random() * 0.85 + 0.35;
+        star.style.opacity = Math.random() * 0.8 + 0.35;
         
         container.appendChild(star);
       }
@@ -175,7 +166,7 @@
     style.innerHTML = `
       @keyframes moveStar {
         from { transform: translate(0, 0); }
-        to   { transform: translate(135vw, -135vh); }
+        to   { transform: translate(140vw, -140vh); }
       }
     `;
     document.head.appendChild(style);
