@@ -18,7 +18,7 @@
       color: white;
     }
 
-    /* Yjet shumë të vegjël që lëvizin */
+    /* Yjet që lëvizin ngadalë */
     .stars {
       position: absolute;
       inset: 0;
@@ -29,85 +29,87 @@
       position: absolute;
       background: white;
       border-radius: 50%;
-      box-shadow: 0 0 4px white;
+      box-shadow: 0 0 5px white;
     }
 
-    /* Emri lart majtas, më i vogël */
+    /* Emri lart majtas me neon jeshil */
     .name {
       position: absolute;
-      top: 12%;
+      top: 15%;
       left: 8%;
-      font-size: 2.1rem;
+      font-size: 2.65rem;
       letter-spacing: 3px;
-      color: #ffffff;
+      color: #fff;
       text-shadow: 
-        0 0 8px #00ff9d,
-        0 0 20px #00ff9d;
+        0 0 12px #00ff9d,
+        0 0 25px #00ff9d,
+        0 0 40px #00ff9d;
       z-index: 10;
     }
 
-    /* Butonat rrumbullak me ngjyrë lart djathtas */
-    .top-buttons {
+    /* Butonat djathtas lart me neon */
+    .buttons {
       position: absolute;
-      top: 12%;
+      top: 15%;
       right: 8%;
       display: flex;
-      gap: 16px;
+      gap: 14px;
       z-index: 10;
     }
 
     .btn {
-      width: 52px;
-      height: 52px;
+      width: 58px;
+      height: 58px;
       background: rgba(0, 255, 150, 0.12);
-      border: 2px solid #00ff9d;
+      border: 3px solid #00ff9d;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.8rem;
+      font-size: 1.9rem;
       color: #00ff9d;
       backdrop-filter: blur(10px);
+      box-shadow: 0 0 18px rgba(0, 255, 150, 0.6);
       transition: all 0.4s ease;
-      box-shadow: 0 0 15px rgba(0, 255, 150, 0.5);
     }
 
     .btn:hover {
-      transform: scale(1.2);
-      background: rgba(0, 255, 150, 0.25);
+      transform: scale(1.18);
+      box-shadow: 0 0 28px rgba(0, 255, 150, 0.9);
     }
 
-    /* UFO me spirale */
+    /* UFO që lëviz poshtë majtas */
     .ufo {
       position: absolute;
-      font-size: 2.8rem;
+      bottom: 32%;
+      left: 10%;
+      font-size: 3.4rem;
       z-index: 5;
-      filter: drop-shadow(0 0 20px #00ffcc);
-      animation: ufoSpiral 32s linear infinite;
+      filter: drop-shadow(0 0 25px #00ffcc);
+      animation: ufoFly 26s linear infinite;
     }
 
-    @keyframes ufoSpiral {
-      0%   { transform: translate(-150px, 85vh) rotate(-25deg); }
-      30%  { transform: translate(60px, 45vh) rotate(10deg); }
-      60%  { transform: translate(170px, 25vh) rotate(-15deg); }
-      100% { transform: translate(280px, -60px) rotate(20deg); }
+    @keyframes ufoFly {
+      0%   { transform: translate(0, 0) rotate(-12deg); }
+      40%  { transform: translate(70px, -45px) rotate(18deg); }
+      100% { transform: translate(140px, -90px) rotate(-8deg); }
     }
 
-    /* Glob i botës poshtë (gjysmë Europë) */
+    /* Glob poshtë (Europë + Afrikë) */
     .globe {
       position: absolute;
-      bottom: -15%;
+      bottom: -22%;
       left: 50%;
       transform: translateX(-50%);
-      width: 380px;
-      height: 380px;
+      width: 440px;
+      height: 440px;
       background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Earth_from_space.jpg/800px-Earth_from_space.jpg') center/cover no-repeat;
       border-radius: 50%;
       box-shadow: 
-        0 0 60px rgba(0, 180, 255, 0.4),
-        inset 0 0 80px rgba(0,0,0,0.7);
+        0 0 90px rgba(0, 180, 255, 0.45),
+        inset 0 0 110px rgba(0,0,0,0.75);
       z-index: 2;
-      opacity: 0.85;
+      opacity: 0.92;
     }
 
     .globe::after {
@@ -115,7 +117,13 @@
       position: absolute;
       inset: 0;
       border-radius: 50%;
-      background: radial-gradient(circle at 40% 40%, rgba(255,255,255,0.15), transparent 70%);
+      background: radial-gradient(circle at 38% 35%, rgba(255,255,255,0.18), transparent 65%);
+    }
+
+    @media (max-width: 480px) {
+      .name { font-size: 2.25rem; }
+      .btn { width: 52px; height: 52px; font-size: 1.7rem; }
+      .globe { width: 380px; height: 380px; bottom: -18%; }
     }
   </style>
 </head>
@@ -123,11 +131,11 @@
 
   <div class="stars" id="stars"></div>
 
-  <!-- Emri lart majtas -->
+  <!-- Emri -->
   <h1 class="name">Pirro Skapeta</h1>
 
-  <!-- Butonat lart djathtas -->
-  <div class="top-buttons">
+  <!-- Butonat -->
+  <div class="buttons">
     <div class="btn" onclick="window.open('https://instagram.com/pirro_skapeta', '_blank')">📷</div>
     <div class="btn" onclick="window.open('https://instagram.com/skapetaapartments', '_blank')">📷</div>
     <div class="btn" onclick="window.open('https://wa.me/355693227207', '_blank')">💬</div>
@@ -136,28 +144,28 @@
   <!-- UFO -->
   <div class="ufo">🛸</div>
 
-  <!-- Glob poshtë -->
+  <!-- Glob -->
   <div class="globe"></div>
 
   <script>
-    // Krijo shumë yje të vegjël që lëvizin
+    // Krijo shumë yje që lëvizin
     function createStars() {
       const container = document.getElementById('stars');
-      for (let i = 0; i < 650; i++) {
+      for (let i = 0; i < 620; i++) {
         const star = document.createElement('div');
         star.classList.add('star');
         
-        const size = Math.random() * 2.2 + 0.6;
+        const size = Math.random() * 2.6 + 0.8;
         star.style.width = `${size}px`;
         star.style.height = `${size}px`;
         
         star.style.left = `${Math.random() * 100}vw`;
         star.style.top = `${Math.random() * 100}vh`;
         
-        const duration = Math.random() * 45 + 28;
+        const duration = Math.random() * 48 + 32;
         star.style.animation = `moveStar ${duration}s linear infinite`;
         
-        star.style.opacity = Math.random() * 0.75 + 0.35;
+        star.style.opacity = Math.random() * 0.85 + 0.35;
         
         container.appendChild(star);
       }
@@ -167,7 +175,7 @@
     style.innerHTML = `
       @keyframes moveStar {
         from { transform: translate(0, 0); }
-        to   { transform: translate(140vw, -140vh); }
+        to   { transform: translate(135vw, -135vh); }
       }
     `;
     document.head.appendChild(style);
