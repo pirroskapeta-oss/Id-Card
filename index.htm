@@ -1,178 +1,181 @@
 <!DOCTYPE html>
 <html lang="sq">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pirro Skapeta</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap');
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pirro Skapeta</title>
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
 
-    body {
-      height: 100vh;
-      overflow: hidden;
-      background: #000;
-      font-family: 'Playfair Display', serif;
-      position: relative;
-      color: white;
-    }
+body {
+    overflow: hidden;
+    color: white;
+}
 
-    /* Yjet */
-    .stars {
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-    }
+/* CANVAS DETI */
+canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
 
-    .star {
-      position: absolute;
-      background: white;
-      border-radius: 50%;
-      box-shadow: 0 0 5px white;
-    }
+/* TEKSTI */
+.container {
+    position: absolute;
+    top: 15%;
+    width: 100%;
+    text-align: center;
+}
 
-    /* Emri - më majtas me hapësirë */
-    .name {
-      position: absolute;
-      top: 18%;
-      left: 7%;
-      font-size: 2.55rem;
-      letter-spacing: 4px;
-      color: #fff;
-      text-shadow: 
-        0 0 12px #00ff9d,
-        0 0 28px #00ff9d;
-      z-index: 10;
-      white-space: nowrap;
-    }
+h1 {
+    font-size: 42px;
+    font-weight: bold;
+    text-shadow: 0 0 20px rgba(0,0,0,0.6);
+}
 
-    /* Butonat - më djathtas pa prekur emrin */
-    .buttons {
-      position: absolute;
-      top: 17.5%;
-      right: 7%;
-      display: flex;
-      gap: 16px;
-      z-index: 10;
-    }
+p {
+    margin-top: 10px;
+    font-size: 18px;
+    opacity: 0.9;
+}
 
-    .btn {
-      width: 58px;
-      height: 58px;
-      background: rgba(0, 255, 150, 0.15);
-      border: 3px solid #00ff9d;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.85rem;
-      color: #00ff9d;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 0 20px rgba(0, 255, 150, 0.6);
-      transition: all 0.4s ease;
-    }
+/* GUACKAT */
+.shells {
+    position: absolute;
+    bottom: 40px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+}
 
-    .btn:hover {
-      transform: scale(1.2);
-      box-shadow: 0 0 30px rgba(0, 255, 150, 0.9);
-    }
+.shell {
+    width: 90px;
+    height: 90px;
+    border-radius: 50% 50% 40% 40%;
+    background: radial-gradient(circle at top, #fff, #e0c3a3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+    transition: 0.3s;
+}
 
-    /* UFO */
-    .ufo {
-      position: absolute;
-      bottom: 30%;
-      left: 10%;
-      font-size: 3.3rem;
-      z-index: 5;
-      filter: drop-shadow(0 0 25px #00ffcc);
-      animation: ufoFly 25s linear infinite;
-    }
+.shell:hover {
+    transform: scale(1.15) rotate(5deg);
+}
 
-    @keyframes ufoFly {
-      0%   { transform: translate(0, 0) rotate(-10deg); }
-      50%  { transform: translate(80px, -50px) rotate(20deg); }
-      100% { transform: translate(150px, -95px) rotate(-5deg); }
-    }
-
-    /* Glob */
-    .globe {
-      position: absolute;
-      bottom: -20%;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 420px;
-      height: 420px;
-      background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Earth_from_space.jpg/800px-Earth_from_space.jpg') center/cover no-repeat;
-      border-radius: 50%;
-      box-shadow: 0 0 85px rgba(0, 180, 255, 0.45);
-      z-index: 2;
-      opacity: 0.9;
-    }
-
-    .globe::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: 50%;
-      background: radial-gradient(circle at 40% 35%, rgba(255,255,255,0.2), transparent 70%);
-    }
-
-    @media (max-width: 480px) {
-      .name { font-size: 2.2rem; letter-spacing: 2px; }
-      .btn { width: 52px; height: 52px; font-size: 1.7rem; }
-    }
-  </style>
+.shell span {
+    font-size: 12px;
+    text-align: center;
+    color: black;
+    font-weight: bold;
+}
+</style>
 </head>
+
 <body>
 
-  <div class="stars" id="stars"></div>
+<canvas id="ocean"></canvas>
 
-  <h1 class="name">Pirro Skapeta</h1>
+<div class="container">
+    <h1>Pirro Skapeta</h1>
+    <p>+355 692033673</p>
+    <p>Owner of Skapeta Apartments</p>
+</div>
 
-  <div class="buttons">
-    <div class="btn" onclick="window.open('https://instagram.com/pirro_skapeta', '_blank')">📷</div>
-    <div class="btn" onclick="window.open('https://instagram.com/skapetaapartments', '_blank')">📷</div>
-    <div class="btn" onclick="window.open('https://wa.me/355693227207', '_blank')">💬</div>
-  </div>
+<div class="shells">
+    <div class="shell" onclick="openLink('https://instagram.com/pirro_skapeta')">
+        <span>Instagram<br>@pirro_skapeta</span>
+    </div>
 
-  <div class="ufo">🛸</div>
-  <div class="globe"></div>
+    <div class="shell" onclick="openLink('https://instagram.com/skapetaapartments')">
+        <span>Business<br>@skapetaapartments</span>
+    </div>
 
-  <script>
-    function createStars() {
-      const container = document.getElementById('stars');
-      for (let i = 0; i < 580; i++) {
-        const star = document.createElement('div');
-        star.classList.add('star');
-        
-        const size = Math.random() * 2.5 + 0.7;
-        star.style.width = `${size}px`;
-        star.style.height = `${size}px`;
-        
-        star.style.left = `${Math.random() * 100}vw`;
-        star.style.top = `${Math.random() * 100}vh`;
-        
-        const duration = Math.random() * 45 + 30;
-        star.style.animation = `moveStar ${duration}s linear infinite`;
-        
-        star.style.opacity = Math.random() * 0.8 + 0.35;
-        
-        container.appendChild(star);
-      }
-    }
+    <div class="shell" onclick="openLink('https://wa.me/355693227207')">
+        <span>WhatsApp<br>0693227207</span>
+    </div>
+</div>
 
-    const style = document.createElement('style');
-    style.innerHTML = `
-      @keyframes moveStar {
-        from { transform: translate(0, 0); }
-        to   { transform: translate(140vw, -140vh); }
-      }
-    `;
-    document.head.appendChild(style);
+<script>
+const canvas = document.getElementById("ocean");
+const ctx = canvas.getContext("2d");
 
-    createStars();
-  </script>
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let waves = [];
+
+function createWave(strength = 1) {
+    waves.push({
+        x: Math.random() * canvas.width,
+        y: canvas.height * 0.7,
+        radius: 0,
+        max: 200 * strength,
+        alpha: 0.5
+    });
+}
+
+/* Klikim ne det */
+canvas.addEventListener("click", (e) => {
+    waves.push({
+        x: e.clientX,
+        y: e.clientY,
+        radius: 0,
+        max: 150,
+        alpha: 0.6
+    });
+});
+
+/* Valë automatike çdo 5 sekonda */
+setInterval(() => {
+    createWave(1.5);
+}, 5000);
+
+function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    /* gradient deti */
+    let grd = ctx.createLinearGradient(0, 0, 0, canvas.height);
+    grd.addColorStop(0, "#1e90ff");
+    grd.addColorStop(1, "#00bfff");
+
+    ctx.fillStyle = grd;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    waves.forEach((w, i) => {
+        ctx.beginPath();
+        ctx.arc(w.x, w.y, w.radius, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(255,255,255,${w.alpha})`;
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        w.radius += 2;
+        w.alpha -= 0.005;
+
+        if (w.radius > w.max) {
+            waves.splice(i, 1);
+        }
+    });
+
+    requestAnimationFrame(animate);
+}
+
+animate();
+
+function openLink(url) {
+    window.open(url, "_blank");
+}
+</script>
 
 </body>
 </html>
