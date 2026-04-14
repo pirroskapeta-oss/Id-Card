@@ -6,192 +6,159 @@
 <title>Pirro Skapeta</title>
 
 <style>
-body {
-    margin: 0;
-    overflow: hidden;
-    font-family: Arial, sans-serif;
-    color: white;
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
 }
 
-/* UI mbi 3D */
-.overlay {
-    position: absolute;
-    top: 15%;
-    width: 100%;
-    text-align: center;
-    z-index: 10;
+body{
+overflow:hidden;
+color:white;
 }
 
-.overlay h1 {
-    font-size: 45px;
-    text-shadow: 0 0 20px black;
+/* VIDEO BACKGROUND */
+video{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+object-fit:cover;
+z-index:-2;
+filter:brightness(0.85) contrast(1.1) saturate(1.2);
 }
 
-.overlay p {
-    font-size: 18px;
+/* OVERLAY */
+.overlay-bg{
+position:fixed;
+width:100%;
+height:100%;
+background:linear-gradient(
+to top,
+rgba(0,0,0,0.7),
+rgba(0,0,0,0.2),
+rgba(0,0,0,0.7)
+);
+z-index:-1;
 }
 
-/* GUACKA */
-.shells {
-    position: absolute;
-    bottom: 40px;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    gap: 40px;
-    z-index: 10;
+/* TEXT */
+.container{
+position:absolute;
+top:15%;
+width:100%;
+text-align:center;
 }
 
-.shell {
-    width: 100px;
-    height: 100px;
-    background: radial-gradient(circle, #fff, #d2a679);
-    border-radius: 50% 50% 40% 40%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: 0.3s;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+h1{
+font-size:50px;
+letter-spacing:2px;
+text-shadow:0 0 20px black;
 }
 
-.shell:hover {
-    transform: scale(1.2) rotate(8deg);
+p{
+font-size:18px;
+opacity:0.9;
 }
 
-.shell span {
-    color: black;
-    font-size: 12px;
-    text-align: center;
-    font-weight: bold;
+/* SHELL BUTTONS */
+.shells{
+position:absolute;
+bottom:40px;
+width:100%;
+display:flex;
+justify-content:center;
+gap:30px;
+}
+
+.shell{
+width:100px;
+height:100px;
+border-radius:60% 60% 40% 40%;
+background:radial-gradient(circle at top,#fff,#caa27c);
+box-shadow:
+inset 0 5px 10px rgba(255,255,255,0.6),
+0 15px 30px rgba(0,0,0,0.5);
+display:flex;
+align-items:center;
+justify-content:center;
+cursor:pointer;
+transition:0.3s;
+}
+
+.shell:hover{
+transform:scale(1.2) rotate(6deg);
+}
+
+.shell span{
+font-size:12px;
+color:black;
+font-weight:bold;
+text-align:center;
+}
+
+/* RIPPLE EFFECT */
+.ripple{
+position:absolute;
+border-radius:50%;
+background:rgba(255,255,255,0.4);
+transform:scale(0);
+animation:ripple 1s linear;
+}
+
+@keyframes ripple{
+to{
+transform:scale(6);
+opacity:0;
+}
 }
 </style>
 </head>
 
 <body>
 
-<div class="overlay">
-    <h1>Pirro Skapeta</h1>
-    <p>+355 692033673</p>
-    <p>Owner of Skapeta Apartments</p>
+<!-- REAL VIDEO ONLINE -->
+<video autoplay muted loop playsinline>
+<source src="https://videos.pexels.com/video-files/3195394/3195394-hd_1080_1920_25fps.mp4" type="video/mp4">
+</video>
+
+<div class="overlay-bg"></div>
+
+<div class="container">
+<h1>Pirro Skapeta</h1>
+<p>+355 692033673</p>
+<p>Owner of Skapeta Apartments</p>
 </div>
 
 <div class="shells">
-    <div class="shell" onclick="openLink('https://instagram.com/pirro_skapeta')">
-        <span>Instagram<br>@pirro_skapeta</span>
-    </div>
-
-    <div class="shell" onclick="openLink('https://instagram.com/skapetaapartments')">
-        <span>Business<br>@skapetaapartments</span>
-    </div>
-
-    <div class="shell" onclick="openLink('https://wa.me/355693227207')">
-        <span>WhatsApp<br>0693227207</span>
-    </div>
+<div class="shell" onclick="openLink('https://instagram.com/pirro_skapeta')">
+<span>@pirro_skapeta</span>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<div class="shell" onclick="openLink('https://instagram.com/skapetaapartments')">
+<span>@skapetaapartments</span>
+</div>
+
+<div class="shell" onclick="openLink('https://wa.me/355693227207')">
+<span>WhatsApp</span>
+</div>
+</div>
 
 <script>
-let scene, camera, renderer, water;
+document.addEventListener("click", function(e){
+let ripple=document.createElement("div");
+ripple.className="ripple";
+ripple.style.left=e.clientX+"px";
+ripple.style.top=e.clientY+"px";
+ripple.style.width=ripple.style.height="20px";
+document.body.appendChild(ripple);
+setTimeout(()=>ripple.remove(),1000);
+});
 
-init();
-animate();
-
-function init() {
-    scene = new THREE.Scene();
-
-    camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
-    camera.position.z = 5;
-
-    renderer = new THREE.WebGLRenderer({ antialias: true });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    document.body.appendChild(renderer.domElement);
-
-    /* DRITA */
-    const light = new THREE.DirectionalLight(0xffffff, 1);
-    light.position.set(0, 10, 10);
-    scene.add(light);
-
-    /* DETI */
-    const geometry = new THREE.PlaneGeometry(50, 50, 256, 256);
-    const material = new THREE.MeshPhongMaterial({
-        color: 0x1e90ff,
-        shininess: 100,
-        transparent: true,
-        opacity: 0.9
-    });
-
-    water = new THREE.Mesh(geometry, material);
-    water.rotation.x = -Math.PI / 2;
-    scene.add(water);
-
-    window.addEventListener("resize", onResize);
-    window.addEventListener("click", waveClick);
-}
-
-/* VALË NATYRALE */
-function animateWaves(time) {
-    const pos = water.geometry.attributes.position;
-
-    for (let i = 0; i < pos.count; i++) {
-        let x = pos.getX(i);
-        let y = pos.getY(i);
-
-        let wave =
-            Math.sin(x * 0.3 + time * 1.5) * 0.3 +
-            Math.cos(y * 0.5 + time) * 0.2;
-
-        pos.setZ(i, wave);
-    }
-
-    pos.needsUpdate = true;
-}
-
-/* KLIK → VALË */
-function waveClick(event) {
-    let mouseX = (event.clientX / window.innerWidth) * 2 - 1;
-    let mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
-
-    const pos = water.geometry.attributes.position;
-
-    for (let i = 0; i < pos.count; i++) {
-        let x = pos.getX(i);
-        let y = pos.getY(i);
-
-        let dist = Math.sqrt((x - mouseX*10)**2 + (y - mouseY*10)**2);
-
-        if (dist < 2) {
-            pos.setZ(i, 1);
-        }
-    }
-}
-
-/* VALË E MADHE ÇDO 5 SEK */
-setInterval(() => {
-    const pos = water.geometry.attributes.position;
-
-    for (let i = 0; i < pos.count; i++) {
-        pos.setZ(i, Math.random() * 1);
-    }
-}, 5000);
-
-function animate(time) {
-    requestAnimationFrame(animate);
-
-    animateWaves(time * 0.001);
-
-    renderer.render(scene, camera);
-}
-
-function onResize() {
-    camera.aspect = window.innerWidth/window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-}
-
-function openLink(url) {
-    window.open(url, "_blank");
+function openLink(url){
+window.open(url,"_blank");
 }
 </script>
 
