@@ -15,13 +15,13 @@
       background: #000;
       font-family: 'Playfair Display', serif;
       position: relative;
+      color: white;
     }
 
-    /* Yjet që lëvizin nga majtas-lart → djathtas-poshtë */
+    /* Yjet shumë të vegjël që lëvizin */
     .stars {
       position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
+      inset: 0;
       z-index: 1;
     }
 
@@ -29,73 +29,93 @@
       position: absolute;
       background: white;
       border-radius: 50%;
-      box-shadow: 0 0 6px white;
+      box-shadow: 0 0 4px white;
     }
 
-    /* Emri me neon jeshil të hollë */
+    /* Emri lart majtas, më i vogël */
     .name {
       position: absolute;
-      top: 18%;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 2.4rem;
-      letter-spacing: 6px;
+      top: 12%;
+      left: 8%;
+      font-size: 2.1rem;
+      letter-spacing: 3px;
       color: #ffffff;
       text-shadow: 
-        0 0 10px #00ff9d,
-        0 0 20px #00ff9d,
-        0 0 40px #00ff9d;
+        0 0 8px #00ff9d,
+        0 0 20px #00ff9d;
       z-index: 10;
-      white-space: nowrap;
     }
 
-    /* UFO me levizje spirale */
-    .ufo {
+    /* Butonat rrumbullak me ngjyrë lart djathtas */
+    .top-buttons {
       position: absolute;
-      font-size: 3rem;
-      z-index: 5;
-      filter: drop-shadow(0 0 25px #00ffcc);
-      animation: ufoSpiral 28s linear infinite;
-    }
-
-    @keyframes ufoSpiral {
-      0%   { transform: translate(-120px, 90vh) rotate(-20deg); }
-      25%  { transform: translate(80px, 50vh) rotate(10deg); }
-      50%  { transform: translate(180px, 30vh) rotate(-15deg); }
-      75%  { transform: translate(100px, 10vh) rotate(20deg); }
-      100% { transform: translate(300px, -80px) rotate(-10deg); }
-    }
-
-    /* Butonat e vegjël në të djathtë poshtë */
-    .buttons {
-      position: absolute;
-      bottom: 12%;
+      top: 12%;
       right: 8%;
       display: flex;
-      flex-direction: column;
-      gap: 18px;
+      gap: 16px;
       z-index: 10;
     }
 
     .btn {
-      width: 48px;
-      height: 48px;
-      background: rgba(0, 255, 150, 0.15);
+      width: 52px;
+      height: 52px;
+      background: rgba(0, 255, 150, 0.12);
       border: 2px solid #00ff9d;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.6rem;
+      font-size: 1.8rem;
       color: #00ff9d;
-      backdrop-filter: blur(8px);
-      transition: all 0.3s ease;
-      box-shadow: 0 0 15px rgba(0, 255, 150, 0.4);
+      backdrop-filter: blur(10px);
+      transition: all 0.4s ease;
+      box-shadow: 0 0 15px rgba(0, 255, 150, 0.5);
     }
 
     .btn:hover {
-      transform: scale(1.25);
-      background: rgba(0, 255, 150, 0.3);
+      transform: scale(1.2);
+      background: rgba(0, 255, 150, 0.25);
+    }
+
+    /* UFO me spirale */
+    .ufo {
+      position: absolute;
+      font-size: 2.8rem;
+      z-index: 5;
+      filter: drop-shadow(0 0 20px #00ffcc);
+      animation: ufoSpiral 32s linear infinite;
+    }
+
+    @keyframes ufoSpiral {
+      0%   { transform: translate(-150px, 85vh) rotate(-25deg); }
+      30%  { transform: translate(60px, 45vh) rotate(10deg); }
+      60%  { transform: translate(170px, 25vh) rotate(-15deg); }
+      100% { transform: translate(280px, -60px) rotate(20deg); }
+    }
+
+    /* Glob i botës poshtë (gjysmë Europë) */
+    .globe {
+      position: absolute;
+      bottom: -15%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 380px;
+      height: 380px;
+      background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Earth_from_space.jpg/800px-Earth_from_space.jpg') center/cover no-repeat;
+      border-radius: 50%;
+      box-shadow: 
+        0 0 60px rgba(0, 180, 255, 0.4),
+        inset 0 0 80px rgba(0,0,0,0.7);
+      z-index: 2;
+      opacity: 0.85;
+    }
+
+    .globe::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: radial-gradient(circle at 40% 40%, rgba(255,255,255,0.15), transparent 70%);
     }
   </style>
 </head>
@@ -103,55 +123,56 @@
 
   <div class="stars" id="stars"></div>
 
-  <!-- Emri -->
+  <!-- Emri lart majtas -->
   <h1 class="name">Pirro Skapeta</h1>
 
-  <!-- UFO -->
-  <div class="ufo">🛸</div>
-
-  <!-- Butonat poshtë djathtas (të vegjël) -->
-  <div class="buttons">
+  <!-- Butonat lart djathtas -->
+  <div class="top-buttons">
     <div class="btn" onclick="window.open('https://instagram.com/pirro_skapeta', '_blank')">📷</div>
     <div class="btn" onclick="window.open('https://instagram.com/skapetaapartments', '_blank')">📷</div>
     <div class="btn" onclick="window.open('https://wa.me/355693227207', '_blank')">💬</div>
   </div>
 
+  <!-- UFO -->
+  <div class="ufo">🛸</div>
+
+  <!-- Glob poshtë -->
+  <div class="globe"></div>
+
   <script>
-    // Krijo 400 yje që lëvizin
-    function createMovingStars() {
+    // Krijo shumë yje të vegjël që lëvizin
+    function createStars() {
       const container = document.getElementById('stars');
-      for (let i = 0; i < 400; i++) {
+      for (let i = 0; i < 650; i++) {
         const star = document.createElement('div');
         star.classList.add('star');
         
-        const size = Math.random() * 2.5 + 0.8;
+        const size = Math.random() * 2.2 + 0.6;
         star.style.width = `${size}px`;
         star.style.height = `${size}px`;
         
         star.style.left = `${Math.random() * 100}vw`;
         star.style.top = `${Math.random() * 100}vh`;
         
-        // Kohë e ndryshme për secilin yll
-        const duration = Math.random() * 35 + 25;
+        const duration = Math.random() * 45 + 28;
         star.style.animation = `moveStar ${duration}s linear infinite`;
         
-        star.style.opacity = Math.random() * 0.7 + 0.4;
+        star.style.opacity = Math.random() * 0.75 + 0.35;
         
         container.appendChild(star);
       }
     }
 
-    // Animacioni i yjeve që lëvizin diagonal
     const style = document.createElement('style');
     style.innerHTML = `
       @keyframes moveStar {
         from { transform: translate(0, 0); }
-        to   { transform: translate(120vw, -120vh); }
+        to   { transform: translate(140vw, -140vh); }
       }
     `;
     document.head.appendChild(style);
 
-    createMovingStars();
+    createStars();
   </script>
 
 </body>
