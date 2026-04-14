@@ -1,109 +1,210 @@
 <!DOCTYPE html>
 <html lang="sq">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Pirro Skapeta | Skapeta Apartments</title>
-    <style>
-        body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background-color: #d4bda4; font-family: 'Inter', -apple-system, sans-serif; }
-        canvas { display: block; width: 100vw; height: 100vh; }
-        
-        /* UI Overlay moderne dhe elitare */
-        .overlay {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-between;
-            padding: 60px 20px;
-            box-sizing: border-box;
-            pointer-events: none;
-            z-index: 10;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pirro Skapeta | Skapeta Apartments</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500&display=swap');
 
-        .header { text-align: center; color: white; text-shadow: 0 2px 15px rgba(0,0,0,0.3); }
-        .header h1 { margin: 0; font-size: 26px; font-weight: 300; letter-spacing: 4px; text-transform: uppercase; }
-        .header p { margin: 5px 0; font-size: 14px; letter-spacing: 1px; opacity: 0.8; text-transform: uppercase; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      height: 100vh;
+      overflow: hidden;
+      background: #000;
+    }
 
-        .links-area {
-            width: 100%;
-            max-width: 300px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            pointer-events: auto;
-            margin-bottom: 20px;
-        }
+    .background {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: url('https://i.imgur.com/2vZfK8P.jpg') center/cover no-repeat; /* Mund ta zëvendësosh me linkun tënd të fotos */
+      filter: brightness(0.95);
+      z-index: -2;
+      animation: wave 25s linear infinite;
+    }
 
-        /* Guackat - Dizajn minimalist "Glass" që nuk mbulon rërën reale */
-        .guacka-btn {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            color: #2c3e50;
-            padding: 20px;
-            text-decoration: none;
-            text-align: center;
-            font-weight: 600;
-            font-size: 14px;
-            letter-spacing: 0.5px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-            transition: 0.3s all ease;
-            border: 1px solid rgba(255, 255, 255, 0.4);
-        }
+    .overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.3));
+      z-index: -1;
+    }
 
-        /* Forma unike guackash */
-        .g1 { border-radius: 65% 35% 50% 50% / 40% 40% 60% 60%; }
-        .g2 { border-radius: 35% 65% 60% 40% / 50% 50% 50% 50%; transform: rotate(1deg); }
-        .g3 { border-radius: 50% 50% 20% 20% / 60% 60% 40% 40%; transform: rotate(-1deg); }
+    .container {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 40px 20px;
+      z-index: 1;
+    }
 
-        .guacka-btn:active { transform: scale(0.96); opacity: 0.9; }
-    </style>
+    .top-card {
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(20px);
+      border-radius: 24px;
+      padding: 35px 20px;
+      text-align: center;
+      border: 1px solid rgba(255,255,255,0.2);
+      max-width: 420px;
+      margin: 0 auto;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    }
+
+    .name {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      color: white;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.4);
+      margin-bottom: 8px;
+    }
+
+    .title {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.95);
+      margin-bottom: 6px;
+    }
+
+    .phone {
+      font-size: 1.15rem;
+      color: rgba(255,255,255,0.9);
+      font-weight: 500;
+    }
+
+    .bottom-card {
+      background: rgba(255,255,255,0.13);
+      backdrop-filter: blur(18px);
+      border-radius: 24px;
+      padding: 22px 15px;
+      max-width: 380px;
+      margin: 0 auto 20px;
+      border: 1px solid rgba(255,255,255,0.18);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+    }
+
+    .shells {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .shell {
+      text-align: center;
+      transition: all 0.4s ease;
+      cursor: pointer;
+    }
+
+    .shell img {
+      width: 68px;
+      height: 68px;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4));
+      transition: all 0.4s ease;
+    }
+
+    .shell:hover img {
+      transform: scale(1.15) rotate(8deg);
+      filter: drop-shadow(0 8px 16px rgba(0,0,0,0.5));
+    }
+
+    .shell p {
+      color: white;
+      font-size: 0.85rem;
+      margin-top: 6px;
+      font-weight: 500;
+    }
+
+    .ripple {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.25);
+      pointer-events: none;
+      animation: rippleAnim 1.2s ease-out forwards;
+      z-index: 10;
+    }
+
+    @keyframes rippleAnim {
+      to {
+        transform: scale(3);
+        opacity: 0;
+      }
+    }
+
+    @keyframes wave {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @media (max-width: 480px) {
+      .name { font-size: 2.4rem; }
+      .top-card { padding: 28px 15px; }
+    }
+  </style>
 </head>
 <body>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.ripples/0.5.3/jquery.ripples.min.js"></script>
+  <div class="background" id="bg"></div>
+  <div class="overlay"></div>
 
-    <div class="overlay">
-        <div class="header">
-            <h1>Pirro Skapeta</h1>
-            <p>Skapeta Apartments</p>
-        </div>
-
-        <div class="links-area">
-            <a href="https://www.instagram.com/pirro_skapeta/" target="_blank" class="guacka-btn g1">@pirro_skapeta</a>
-            <a href="https://www.instagram.com/skapetaapartments/" target="_blank" class="guacka-btn g2">@skapetaapartments</a>
-            <a href="https://wa.me/355693227207" target="_blank" class="guacka-btn g3">WhatsApp: 069 322 7207</a>
-        </div>
+  <div class="container">
+    <!-- Top Card - Emri lart -->
+    <div class="top-card">
+      <h1 class="name">Pirro Skapeta</h1>
+      <p class="title">Pronar i Skapeta Apartments</p>
+      <p class="phone">+355 69 203 3673</p>
     </div>
 
-    <div id="beach-bg" style="width: 100%; height: 100vh; background-size: cover; background-position: center;"></div>
+    <!-- Bottom Card - Guaskat -->
+    <div class="bottom-card">
+      <div class="shells">
+        <div class="shell" onclick="window.open('https://instagram.com/pirro_skapeta', '_blank')">
+          <img src="https://i.imgur.com/3QJqZfP.png" alt="Shell 1"> <!-- Mund të zëvendësosh me guaska reale -->
+          <p>@pirro_skapeta</p>
+        </div>
+        <div class="shell" onclick="window.open('https://instagram.com/skapetaapartments', '_blank')">
+          <img src="https://i.imgur.com/8vL9kLm.png" alt="Shell 2">
+          <p>@skapetaapartments</p>
+        </div>
+        <div class="shell" onclick="window.open('https://wa.me/355693227207', '_blank')">
+          <img src="https://i.imgur.com/5zqK9pN.png" alt="Shell 3">
+          <p>069 322 7207</p>
+        </div>
+      </div>
+    </div>
+  </div>
 
-    <script>
-        $(document).ready(function() {
-            try {
-                $('#beach-bg').ripples({
-                    imageUrl: 'f14f1baab6526414e64ccb137f95e974.jpg', // Fotoja jote origjinale
-                    dropRadius: 20,
-                    perturbance: 0.02,
-                    resolution: 512,
-                    interactive: true
-                });
+  <script>
+    // Efekt Ripple kur prek ujin
+    const bg = document.getElementById('bg');
+    
+    function createRipple(e) {
+      const ripple = document.createElement('div');
+      ripple.classList.add('ripple');
+      
+      const size = Math.random() * 60 + 40;
+      ripple.style.width = `${size}px`;
+      ripple.style.height = `${size}px`;
+      
+      ripple.style.left = `${e.clientX - size/2}px`;
+      ripple.style.top = `${e.clientY - size/2}px`;
+      
+      document.body.appendChild(ripple);
+      
+      setTimeout(() => ripple.remove(), 1500);
+    }
 
-                // Efekti i dallgës automatike çdo 5 sekonda
-                setInterval(function() {
-                    var x = Math.random() * $('#beach-bg').width();
-                    var y = Math.random() * ($('#beach-bg').height() * 0.5); // Vetëm te pjesa e ujit
-                    $('#beach-bg').ripples('drop', x, y, 30, 0.04);
-                }, 5000);
+    document.addEventListener('click', createRipple);
+    document.addEventListener('touchstart', (e) => {
+      createRipple(e.touches[0]);
+    });
 
-            } catch (e) {
-                console.error("Browser-i nuk mbështet WebGL për efektin e ujit.");
-                $('#beach-bg').css('background-image', 'url(f14f1baab6526414e64ccb137f95e974.jpg)');
-            }
-        });
-    </script>
+    // Për animacion më të butë të dallgëve (opsional)
+    console.log("%c🌊 Pirro Skapeta ID Card u ngarkua me sukses!", "color:#00ccff; font-size:14px;");
+  </script>
 </body>
 </html>
