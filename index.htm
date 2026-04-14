@@ -3,16 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Skapeta Apartments | Elite ID</title>
+    <title>Pirro Skapeta | Skapeta Apartments</title>
     <style>
-        body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; font-family: 'Inter', -apple-system, sans-serif; }
-        #canvas-wrapper { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background-color: #d4bda4; font-family: 'Inter', -apple-system, sans-serif; }
+        canvas { display: block; width: 100vw; height: 100vh; }
         
-        /* UI Overlay */
-        .interface {
-            position: relative;
-            z-index: 10;
-            height: 100vh;
+        /* UI Overlay moderne dhe elitare */
+        .overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -20,136 +19,91 @@
             padding: 60px 20px;
             box-sizing: border-box;
             pointer-events: none;
+            z-index: 10;
         }
 
-        .header-brand {
-            text-align: center;
-            color: #fff;
-            text-shadow: 0 4px 20px rgba(0,0,0,0.4);
-        }
+        .header { text-align: center; color: white; text-shadow: 0 2px 15px rgba(0,0,0,0.3); }
+        .header h1 { margin: 0; font-size: 26px; font-weight: 300; letter-spacing: 4px; text-transform: uppercase; }
+        .header p { margin: 5px 0; font-size: 14px; letter-spacing: 1px; opacity: 0.8; text-transform: uppercase; }
 
-        .header-brand h1 { margin: 0; font-size: 26px; font-weight: 300; letter-spacing: 5px; text-transform: uppercase; }
-        .header-brand div { width: 40px; height: 1px; background: #fff; margin: 15px auto; opacity: 0.6; }
-        .header-brand p { font-size: 13px; letter-spacing: 2px; text-transform: uppercase; opacity: 0.8; }
-
-        .links {
+        .links-area {
+            width: 100%;
+            max-width: 300px;
             display: flex;
             flex-direction: column;
-            gap: 20px;
-            width: 100%;
-            max-width: 290px;
+            gap: 15px;
             pointer-events: auto;
+            margin-bottom: 20px;
         }
 
-        /* Guackat Elitare - Dizajn Realist */
-        .shell-item {
-            position: relative;
-            background: rgba(255, 255, 255, 0.95);
+        /* Guackat - Dizajn minimalist "Glass" që nuk mbulon rërën reale */
+        .guacka-btn {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: #2c3e50;
             padding: 20px;
             text-decoration: none;
-            color: #1a1a1a;
-            font-size: 14px;
-            font-weight: 600;
             text-align: center;
-            letter-spacing: 1px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.5);
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            transition: 0.3s all ease;
+            border: 1px solid rgba(255, 255, 255, 0.4);
         }
 
-        /* Formë unike guackash organike */
-        .s1 { border-radius: 60% 40% 70% 30% / 50% 60% 40% 50%; }
-        .s2 { border-radius: 40% 60% 30% 70% / 60% 40% 60% 40%; transform: translateX(5px); }
-        .s3 { border-radius: 50% 50% 10% 10% / 60% 60% 40% 40%; transform: translateX(-5px); }
+        /* Forma unike guackash */
+        .g1 { border-radius: 65% 35% 50% 50% / 40% 40% 60% 60%; }
+        .g2 { border-radius: 35% 65% 60% 40% / 50% 50% 50% 50%; transform: rotate(1deg); }
+        .g3 { border-radius: 50% 50% 20% 20% / 60% 60% 40% 40%; transform: rotate(-1deg); }
 
-        .shell-item:hover { transform: scale(1.05) translateY(-5px); background: #fff; box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
-        .shell-item:active { transform: scale(0.98); }
+        .guacka-btn:active { transform: scale(0.96); opacity: 0.9; }
     </style>
 </head>
 <body>
 
-<div id="canvas-wrapper"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.ripples/0.5.3/jquery.ripples.min.js"></script>
 
-<div class="interface">
-    <div class="header-brand">
-        <h1>Pirro Skapeta</h1>
-        <div></div>
-        <p>Skapeta Apartments</p>
+    <div class="overlay">
+        <div class="header">
+            <h1>Pirro Skapeta</h1>
+            <p>Skapeta Apartments</p>
+        </div>
+
+        <div class="links-area">
+            <a href="https://www.instagram.com/pirro_skapeta/" target="_blank" class="guacka-btn g1">@pirro_skapeta</a>
+            <a href="https://www.instagram.com/skapetaapartments/" target="_blank" class="guacka-btn g2">@skapetaapartments</a>
+            <a href="https://wa.me/355693227207" target="_blank" class="guacka-btn g3">WhatsApp: 069 322 7207</a>
+        </div>
     </div>
 
-    <div class="links">
-        <a href="https://www.instagram.com/pirro_skapeta/" target="_blank" class="shell-item s1">@pirro_skapeta</a>
-        <a href="https://www.instagram.com/skapetaapartments/" target="_blank" class="shell-item s2">@skapetaapartments</a>
-        <a href="https://wa.me/355693227207" target="_blank" class="shell-item s3">KONTAKTO NË WHATSAPP</a>
-    </div>
-</div>
+    <div id="beach-bg" style="width: 100%; height: 100vh; background-size: cover; background-position: center;"></div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/6.5.1/browser/pixi.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            try {
+                $('#beach-bg').ripples({
+                    imageUrl: 'f14f1baab6526414e64ccb137f95e974.jpg', // Fotoja jote origjinale
+                    dropRadius: 20,
+                    perturbance: 0.02,
+                    resolution: 512,
+                    interactive: true
+                });
 
-<script>
-    const wrapper = document.getElementById('canvas-wrapper');
-    const app = new PIXI.Application({
-        width: window.innerWidth,
-        height: window.innerHeight,
-        resolution: window.devicePixelRatio || 1,
-        autoResize: true,
-        transparent: true
-    });
-    wrapper.appendChild(app.view);
+                // Efekti i dallgës automatike çdo 5 sekonda
+                setInterval(function() {
+                    var x = Math.random() * $('#beach-bg').width();
+                    var y = Math.random() * ($('#beach-bg').height() * 0.5); // Vetëm te pjesa e ujit
+                    $('#beach-bg').ripples('drop', x, y, 30, 0.04);
+                }, 5000);
 
-    // Ngarkimi i imazhit tënd
-    const texture = PIXI.Texture.from('f14f1baab6526414e64ccb137f95e974.jpg');
-    const bg = new PIXI.Sprite(texture);
-    
-    bg.anchor.set(0.5);
-    bg.x = app.screen.width / 2;
-    bg.y = app.screen.height / 2;
-    
-    // Përshtatja e imazhit që të mbulojë ekranin (Cover effect)
-    const ratio = Math.max(app.screen.width / bg.width, app.screen.height / bg.height);
-    bg.scale.set(ratio);
-    
-    app.stage.addChild(bg);
-
-    // KRIJIMI I DALLGËVE REALE (Displacement Map)
-    // Përdorim një teksturë uji për të krijuar lëvizjen
-    const displacementSprite = PIXI.Sprite.from('https://res.cloudinary.com/dg70sbebh/image/upload/v1582214708/displacement_map_repeat_v6yv9z.jpg');
-    displacementSprite.texture.baseTexture.wrapMode = PIXI.WRAP_MODES.REPEAT;
-    const displacementFilter = new PIXI.filters.DisplacementFilter(displacementSprite);
-    
-    // Filtri aplikohet vetëm te uji (pjesa e sipërme)
-    app.stage.addChild(displacementSprite);
-    bg.filters = [displacementFilter];
-
-    displacementFilter.scale.x = 20;
-    displacementFilter.scale.y = 20;
-
-    // Animacioni i lëvizjes së ujit
-    app.ticker.add(() => {
-        displacementSprite.x += 0.4; // Shpejtësia e dallgëve
-        displacementSprite.y += 0.2;
-    });
-
-    // INTERAKSIONI: Prekja e ujit krijohet valëzim (Ripple)
-    window.addEventListener('pointerdown', () => {
-        displacementFilter.scale.x = 60;
-        displacementFilter.scale.y = 60;
-        setTimeout(() => {
-            displacementFilter.scale.x = 20;
-            displacementFilter.scale.y = 20;
-        }, 300);
-    });
-
-    // Resize
-    window.addEventListener('resize', () => {
-        app.renderer.resize(window.innerWidth, window.innerHeight);
-        const newRatio = Math.max(app.screen.width / bg.width, app.screen.height / bg.height);
-        bg.scale.set(newRatio);
-        bg.x = app.screen.width / 2;
-        bg.y = app.screen.height / 2;
-    });
-</script>
-
+            } catch (e) {
+                console.error("Browser-i nuk mbështet WebGL për efektin e ujit.");
+                $('#beach-bg').css('background-image', 'url(f14f1baab6526414e64ccb137f95e974.jpg)');
+            }
+        });
+    </script>
 </body>
 </html>
