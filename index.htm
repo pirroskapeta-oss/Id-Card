@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pirro Skapeta | Skapeta Apartments</title>
+  <title>Pirro Skapeta</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500&display=swap');
 
@@ -17,19 +17,17 @@
 
     .background {
       position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: url('https://picsum.photos/id/1015/2000/1200') center/cover no-repeat;
-      filter: brightness(0.92) contrast(1.05);
+      inset: 0;
+      background: url('https://source.unsplash.com/random/2000x1200/?turquoise-ocean-waves') center/cover no-repeat;
+      filter: brightness(0.93) saturate(1.1);
       z-index: -2;
-      animation: slowWave 40s linear infinite;
+      animation: gentleWave 50s linear infinite;
     }
 
     .overlay {
       position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: linear-gradient(to bottom, rgba(0,40,70,0.25), rgba(0,20,50,0.45));
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(10, 50, 80, 0.3), rgba(10, 30, 60, 0.5));
       z-index: -1;
     }
 
@@ -39,42 +37,50 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      padding: 40px 20px 30px;
+      padding: 50px 20px 40px;
       z-index: 2;
     }
 
     .top-card {
-      background: rgba(255,255,255,0.13);
-      backdrop-filter: blur(22px);
-      border-radius: 26px;
-      padding: 38px 25px;
+      background: rgba(255, 255, 255, 0.14);
+      backdrop-filter: blur(24px);
+      border-radius: 28px;
+      padding: 40px 25px;
       text-align: center;
       border: 1px solid rgba(255,255,255,0.25);
       max-width: 420px;
       margin: 0 auto;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.35);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.4);
     }
 
     .name {
       font-family: 'Playfair Display', serif;
-      font-size: 2.85rem;
+      font-size: 2.9rem;
       color: #fff;
-      text-shadow: 0 3px 12px rgba(0,0,0,0.5);
-      margin-bottom: 10px;
+      text-shadow: 0 4px 15px rgba(0,0,0,0.5);
+      margin-bottom: 12px;
     }
 
-    .title { font-size: 1.15rem; color: rgba(255,255,255,0.95); margin-bottom: 8px; }
-    .phone { font-size: 1.2rem; color: rgba(255,255,255,0.9); font-weight: 500; }
+    .title { 
+      font-size: 1.18rem; 
+      color: rgba(255,255,255,0.95); 
+      margin-bottom: 8px; 
+    }
+    .phone { 
+      font-size: 1.22rem; 
+      color: rgba(255,255,255,0.92); 
+      font-weight: 500; 
+    }
 
     .bottom-card {
-      background: rgba(255,255,255,0.13);
+      background: rgba(255, 255, 255, 0.13);
       backdrop-filter: blur(20px);
       border-radius: 24px;
-      padding: 20px 15px;
-      max-width: 360px;
-      margin: 0 auto 20px;
+      padding: 18px 15px;
+      max-width: 340px;
+      margin: 0 auto 30px;
       border: 1px solid rgba(255,255,255,0.2);
-      box-shadow: 0 10px 35px rgba(0,0,0,0.3);
+      box-shadow: 0 10px 35px rgba(0,0,0,0.35);
     }
 
     .shells {
@@ -85,36 +91,36 @@
 
     .shell {
       text-align: center;
-      transition: all 0.4s ease;
+      transition: transform 0.4s ease;
       cursor: pointer;
     }
 
     .shell img {
-      width: 62px;
-      height: 62px;
-      filter: drop-shadow(0 5px 10px rgba(0,0,0,0.5));
+      width: 58px;
+      height: 58px;
+      filter: drop-shadow(0 6px 12px rgba(0,0,0,0.5));
       transition: all 0.4s ease;
     }
 
     .shell:hover img {
-      transform: scale(1.18) rotate(10deg);
+      transform: scale(1.2) rotate(12deg);
     }
 
     .shell p {
       color: #fff;
-      font-size: 0.82rem;
-      margin-top: 6px;
+      font-size: 0.8rem;
+      margin-top: 5px;
       font-weight: 500;
     }
 
-    @keyframes slowWave {
-      0%   { background-position: 0% 50%; }
+    @keyframes gentleWave {
+      0% { background-position: 0% 50%; }
       100% { background-position: 100% 50%; }
     }
 
     @media (max-width: 480px) {
-      .name { font-size: 2.4rem; }
-      .top-card { padding: 30px 18px; }
+      .name { font-size: 2.45rem; }
+      .top-card { padding: 32px 20px; }
     }
   </style>
 </head>
@@ -124,26 +130,26 @@
   <div class="overlay"></div>
 
   <div class="container">
-    <!-- Top - Emri lart me blur të fortë -->
+    <!-- Emri shumë lart -->
     <div class="top-card">
       <h1 class="name">Pirro Skapeta</h1>
       <p class="title">Pronar i Skapeta Apartments</p>
       <p class="phone">+355 69 203 3673</p>
     </div>
 
-    <!-- Bottom - Guaskat më të vogla -->
+    <!-- Guaskat poshtë (më të vogla) -->
     <div class="bottom-card">
       <div class="shells">
         <div class="shell" onclick="window.open('https://instagram.com/pirro_skapeta', '_blank')">
-          <img src="https://i.ibb.co/0jZfK8P/seashell1.png" alt="Instagram Personal">
+          <img src="https://cdn-icons-png.flaticon.com/512/5968/5968890.png" alt="IG Personal">
           <p>@pirro_skapeta</p>
         </div>
         <div class="shell" onclick="window.open('https://instagram.com/skapetaapartments', '_blank')">
-          <img src="https://i.ibb.co/8vL9kLm/seashell2.png" alt="Instagram Business">
+          <img src="https://cdn-icons-png.flaticon.com/512/5968/5968890.png" alt="IG Business">
           <p>@skapetaapartments</p>
         </div>
         <div class="shell" onclick="window.open('https://wa.me/355693227207', '_blank')">
-          <img src="https://i.ibb.co/5zqK9pN/seashell3.png" alt="WhatsApp">
+          <img src="https://cdn-icons-png.flaticon.com/512/5968/5968958.png" alt="WhatsApp">
           <p>069 322 7207</p>
         </div>
       </div>
