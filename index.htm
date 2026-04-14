@@ -1,1 +1,249 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Pirro Skapeta - Skapeta Apartments</title>
+    <style>
+        body { margin: 0; overflow: hidden; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        #webgl-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
+
+        .content-container {
+            position: absolute;
+            bottom: 30px; /* Vendos butonat te pjesa e reres */
+            left: 0;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            z-index: 10;
+        }
+
+        .header-info {
+            text-align: center;
+            color: #fff;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            margin-bottom: 20px;
+        }
+
+        .header-info h1 { margin: 0; font-size: 24px; }
+        .header-info p { margin: 5px 0 0; font-size: 16px; opacity: 0.9; }
+
+        .shell-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 280px;
+            height: 70px;
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            font-size: 16px;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .shell-btn:active {
+            transform: translateY(2px) scale(0.98);
+        }
+
+        /* Stilet specifike per 3 guackat e ndryshme */
+        .shell-1 {
+            background: #fff5e6;
+            border-radius: 60% 40% 70% 30% / 50% 60% 40% 50%; /* Formë asimetrike 1 */
+            border: 2px solid #e0cda9;
+        }
+
+        .shell-2 {
+            background: #fdf2d9;
+            border-radius: 30% 70% 30% 70% / 60% 40% 60% 40%; /* Formë asimetrike 2 */
+            border: 2px solid #e9d9b0;
+        }
+
+        .shell-3 {
+            background: #fff0d4;
+            border-radius: 50% 50% 10px 10px; /* Formë si fanelë 3 */
+            border: 2px solid #f1e0bf;
+        }
+
+        /* Teksturat e vijave te guackave */
+        .shell-btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(15deg, rgba(224,205,169,0.3) 1px, transparent 1px),
+                linear-gradient(165deg, rgba(224,205,169,0.3) 1px, transparent 1px);
+            background-size: 20px 20px;
+            border-radius: inherit;
+        }
+
+        .btn-text {
+            z-index: 1;
+            text-shadow: 0 1px 1px rgba(255,255,255,0.8);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Ikonat (per thjeshtesi po perdorim emoji, mund te zevendesohen me SVG) */
+        .icon { font-size: 1.2em; }
+    </style>
+</head>
+<body>
+
+    <canvas id="webgl-canvas"></canvas>
+
+    <div class="content-container">
+        <div class="header-info">
+            <h1>Pirro Skapeta</h1>
+            <p>Skapeta Apartments</p>
+        </div>
+
+        <a href="https://www.instagram.com/pirro_skapeta/" target="_blank" class="shell-btn shell-1">
+            <span class="btn-text"><span class="icon">👤</span> Instagram: pirro_skapeta</span>
+        </a>
+
+        <a href="https://www.instagram.com/skapetaapartments/" target="_blank" class="shell-btn shell-2">
+            <span class="btn-text"><span class="icon">🏠</span> Skapeta Apartments</span>
+        </a>
+
+        <a href="https://wa.me/355693227207" target="_blank" class="shell-btn shell-3">
+            <span class="btn-text"><span class="icon">💬</span> WhatsApp</span>
+        </a>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <script>
+        // --- Setup Bazë e Three.js ---
+        const canvas = document.getElementById('webgl-canvas');
+        const renderer = new THREE.WebGLRenderer({canvas, antialias: true});
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        const scene = new THREE.Scene();
+        const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+
+        // --- Shaderi i Ujit (Kryen magjinë) ---
+        // Ky shader përdor foton tënde dhe aplikon valëzim matematik
+        const vertexShader = `
+            varying vec2 vUv;
+            void main() {
+                vUv = uv;
+                gl_Position = vec4(position, 1.0);
+            }
+        `;
+
+        const fragmentShader = `
+            uniform sampler2D tBeach;
+            uniform float uTime;
+            uniform vec2 uMouse;
+            uniform float u_time_since_click;
+            uniform float u_wave_burst;
+            varying vec2 vUv;
+
+            void main() {
+                vec2 uv = vUv;
+                vec2 mouse = uMouse;
+                
+                // --- Efekti i Prekjes (Valë rrethore) ---
+                float dist = distance(uv, mouse);
+                float ripple = sin((dist - u_time_since_click * 0.5) * 40.0) * 0.5 + 0.5;
+                ripple *= max(0.0, 1.0 - u_time_since_click * 1.5); // Zhduket me kalimin e kohes
+                
+                // Përcakto zonën e ujit (pjesa e sipërme 60% e fotos)
+                float waterMask = smoothstep(0.4, 0.42, uv.y);
+                
+                // --- Dinamika e Ujit Të Përgjithshëm ---
+                vec2 distortion = vec2(
+                    sin(uv.y * 10.0 + uTime * 1.0) * 0.005,
+                    cos(uv.x * 10.0 + uTime * 1.5) * 0.003
+                );
+                
+                // Shto deformimin e prekjes vetem nese eshte ne uje
+                distortion += (ripple * 0.01) * waterMask;
+                
+                // --- Efekti i Dallgës Çdo 5 Sekonda ---
+                // Një dallgë më e fortë që vjen nga lart poshtë
+                float bigWave = sin((uv.y - u_wave_burst * 0.4) * 20.0) * 0.02 * waterMask;
+                bigWave *= smoothstep(0.0, 0.5, u_wave_burst) * smoothstep(2.5, 0.0, u_wave_burst); // Hyrje-Dalle e bute
+                distortion.y += bigWave;
+
+                // Apliko deformimin te fotoja
+                gl_FragColor = texture2D(tBeach, uv + distortion);
+            }
+        `;
+
+        // --- Ngarkimi i Fotos Sënde si Teksturë ---
+        // Kjo URL është fotoja që dërgove, e ruajtur përkohësisht.
+        const loader = new THREE.TextureLoader();
+        const beachTexture = loader.load('https://i.imgur.com/8xV4T7t.jpg'); // URL e fotos tende
+        beachTexture.wrapS = beachTexture.wrapT = THREE.RepeatWrapping;
+
+        const uniforms = {
+            tBeach: { value: beachTexture },
+            uTime: { value: 0 },
+            uMouse: { value: new THREE.Vector2(-1, -1) }, // Jashtë ekranit fillimisht
+            u_time_since_click: { value: 999 }, // Shumë larg që mos duket fillimisht
+            u_wave_burst: { value: 0 }
+        };
+
+        const material = new THREE.ShaderMaterial({
+            uniforms,
+            vertexShader,
+            fragmentShader,
+        });
+
+        const geometry = new THREE.PlaneGeometry(2, 2);
+        const mesh = new THREE.Mesh(geometry, material);
+        scene.add(mesh);
+
+        // --- Animacioni ---
+        let lastClickTime = 0;
+        let lastWaveBurstTime = 0;
+        const clock = new THREE.Clock();
+
+        function animate() {
+            requestAnimationFrame(animate);
+            const delta = clock.getDelta();
+            const elapsedTime = clock.getElapsedTime();
+            
+            uniforms.uTime.value = elapsedTime;
+            uniforms.u_time_since_click.value = (performance.now() - lastClickTime) / 1000.0;
+            
+            // Logjika për dallgën çdo 5 sekonda
+            if (elapsedTime - lastWaveBurstTime > 5.0) {
+                lastWaveBurstTime = elapsedTime;
+            }
+            uniforms.u_wave_burst.value = elapsedTime - lastWaveBurstTime;
+
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // --- Interaksioni (Prekja e Ujit) ---
+        function handleInteraction(event) {
+            event.preventDefault(); // Parandalon skrollimin ne telefon kur preket uji
+            
+            const x = (event.touches ? event.touches[0].clientX : event.clientX) / window.innerWidth;
+            const y = 1.0 - (event.touches ? event.touches[0].clientY : event.clientY) / window.innerHeight;
+            
+            // Regjistro vendndodhjen dhe kohën e klikimit
+            uniforms.uMouse.value.set(x, y);
+            lastClickTime = performance.now();
+        }
+
+        // Dëgjo për klikime (mouse) dhe prekje (touch)
+        canvas.addEventListener('mousedown', handleInteraction);
+        canvas.addEventListener('touchstart', handleInteraction, {passive: false});
+
+        // --- Përshtatja e Madhësisë së Dritares ---
+        window.addEventListener('resize', () => {
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
+</body>
+</html>
 
