@@ -13,28 +13,59 @@ font-family:sans-serif;
 color:white;
 }
 
-/* BACKGROUND REAL */
+/* BACKGROUND */
 .bg{
 position:fixed;
 width:100%;
 height:100%;
 background:url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e') no-repeat center/cover;
-z-index:-2;
+z-index:-3;
 }
 
-/* WAVE ANIMATION OVERLAY */
-.wave{
+/* LAYER VALË 1 */
+.wave1{
 position:fixed;
 width:200%;
 height:200%;
-background:radial-gradient(circle at center, rgba(255,255,255,0.1), transparent);
-animation:move 8s linear infinite;
+background:radial-gradient(circle at 30% 40%, rgba(255,255,255,0.15), transparent);
+animation:move1 12s linear infinite;
+z-index:-2;
+}
+
+/* LAYER VALË 2 */
+.wave2{
+position:fixed;
+width:200%;
+height:200%;
+background:radial-gradient(circle at 70% 60%, rgba(255,255,255,0.1), transparent);
+animation:move2 18s linear infinite;
 z-index:-1;
 }
 
-@keyframes move{
-0%{transform:translateX(0);}
-100%{transform:translateX(-50%);}
+@keyframes move1{
+0%{transform:translateX(0) translateY(0);}
+100%{transform:translateX(-50%) translateY(-20%);}
+}
+
+@keyframes move2{
+0%{transform:translateX(0) translateY(0);}
+100%{transform:translateX(-30%) translateY(-10%);}
+}
+
+/* RIPPLE CLICK */
+.ripple{
+position:absolute;
+border-radius:50%;
+background:rgba(255,255,255,0.4);
+transform:scale(0);
+animation:ripple 1s linear;
+}
+
+@keyframes ripple{
+to{
+transform:scale(6);
+opacity:0;
+}
 }
 
 /* TEXT */
@@ -54,7 +85,7 @@ p{
 opacity:0.9;
 }
 
-/* SHELL BUTTONS */
+/* BUTTONS */
 .shells{
 position:absolute;
 bottom:40px;
@@ -88,7 +119,8 @@ transform:scale(1.2) rotate(5deg);
 <body>
 
 <div class="bg"></div>
-<div class="wave"></div>
+<div class="wave1"></div>
+<div class="wave2"></div>
 
 <div class="container">
 <h1>Pirro Skapeta</h1>
@@ -103,6 +135,18 @@ transform:scale(1.2) rotate(5deg);
 </div>
 
 <script>
+/* RIPPLE */
+document.addEventListener("click", function(e){
+let ripple=document.createElement("div");
+ripple.className="ripple";
+ripple.style.left=e.clientX+"px";
+ripple.style.top=e.clientY+"px";
+ripple.style.width=ripple.style.height="20px";
+document.body.appendChild(ripple);
+setTimeout(()=>ripple.remove(),1000);
+});
+
+/* LINKS */
 function openLink(url){
 window.open(url,"_blank");
 }
