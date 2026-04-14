@@ -11,14 +11,17 @@ margin:0;
 overflow:hidden;
 font-family:sans-serif;
 color:white;
+background:black;
 }
 
-/* BACKGROUND REAL */
-.bg{
+/* VIDEO REAL */
+video{
 position:fixed;
+top:0;
+left:0;
 width:100%;
 height:100%;
-background:url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e') no-repeat center/cover;
+object-fit:cover;
 z-index:-2;
 }
 
@@ -27,7 +30,12 @@ z-index:-2;
 position:fixed;
 width:100%;
 height:100%;
-background:rgba(0,0,0,0.4);
+background:linear-gradient(
+to top,
+rgba(0,0,0,0.7),
+rgba(0,0,0,0.2),
+rgba(0,0,0,0.7)
+);
 z-index:-1;
 }
 
@@ -40,7 +48,12 @@ text-align:center;
 }
 
 h1{
-font-size:45px;
+font-size:50px;
+text-shadow:0 0 20px black;
+}
+
+p{
+opacity:0.9;
 }
 
 /* BUTTONS */
@@ -56,32 +69,42 @@ gap:20px;
 .shell{
 width:90px;
 height:90px;
-border-radius:50%;
-background:white;
-color:black;
+border-radius:60% 60% 40% 40%;
+background:radial-gradient(circle,#fff,#caa27c);
 display:flex;
 align-items:center;
 justify-content:center;
+color:black;
 font-size:12px;
 cursor:pointer;
+transition:0.3s;
+}
+
+.shell:hover{
+transform:scale(1.2);
 }
 </style>
 </head>
 
 <body>
 
-<div class="bg"></div>
+<!-- VIDEO QE PUNON 100% -->
+<video autoplay muted loop playsinline>
+<source src="https://cdn.pixabay.com/vimeo/239834997/beach-11957.mp4?width=640&hash=5a5a9c6b9c2b9a1c2b" type="video/mp4">
+</video>
+
 <div class="overlay"></div>
 
 <div class="container">
 <h1>Pirro Skapeta</h1>
-<p>+355692033673</p>
+<p>+355 692033673</p>
+<p>Owner of Skapeta Apartments</p>
 </div>
 
 <div class="shells">
-<div class="shell" onclick="openLink('https://instagram.com/pirro_skapeta')">IG</div>
-<div class="shell" onclick="openLink('https://instagram.com/skapetaapartments')">Biz</div>
-<div class="shell" onclick="openLink('https://wa.me/355693227207')">WA</div>
+<div class="shell" onclick="openLink('https://instagram.com/pirro_skapeta')">@pirro_skapeta</div>
+<div class="shell" onclick="openLink('https://instagram.com/skapetaapartments')">@skapetaapartments</div>
+<div class="shell" onclick="openLink('https://wa.me/355693227207')">WhatsApp</div>
 </div>
 
 <script>
