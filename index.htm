@@ -11,32 +11,30 @@ margin:0;
 overflow:hidden;
 font-family:sans-serif;
 color:white;
-background:black;
 }
 
-/* VIDEO REAL */
-video{
+/* BACKGROUND REAL */
+.bg{
 position:fixed;
-top:0;
-left:0;
 width:100%;
 height:100%;
-object-fit:cover;
+background:url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e') no-repeat center/cover;
 z-index:-2;
 }
 
-/* OVERLAY */
-.overlay{
+/* WAVE ANIMATION OVERLAY */
+.wave{
 position:fixed;
-width:100%;
-height:100%;
-background:linear-gradient(
-to top,
-rgba(0,0,0,0.7),
-rgba(0,0,0,0.2),
-rgba(0,0,0,0.7)
-);
+width:200%;
+height:200%;
+background:radial-gradient(circle at center, rgba(255,255,255,0.1), transparent);
+animation:move 8s linear infinite;
 z-index:-1;
+}
+
+@keyframes move{
+0%{transform:translateX(0);}
+100%{transform:translateX(-50%);}
 }
 
 /* TEXT */
@@ -56,19 +54,19 @@ p{
 opacity:0.9;
 }
 
-/* BUTTONS */
+/* SHELL BUTTONS */
 .shells{
 position:absolute;
 bottom:40px;
 width:100%;
 display:flex;
 justify-content:center;
-gap:20px;
+gap:25px;
 }
 
 .shell{
-width:90px;
-height:90px;
+width:100px;
+height:100px;
 border-radius:60% 60% 40% 40%;
 background:radial-gradient(circle,#fff,#caa27c);
 display:flex;
@@ -78,22 +76,19 @@ color:black;
 font-size:12px;
 cursor:pointer;
 transition:0.3s;
+box-shadow:0 15px 30px rgba(0,0,0,0.5);
 }
 
 .shell:hover{
-transform:scale(1.2);
+transform:scale(1.2) rotate(5deg);
 }
 </style>
 </head>
 
 <body>
 
-<!-- VIDEO QE PUNON 100% -->
-<video autoplay muted loop playsinline>
-<source src="https://cdn.pixabay.com/vimeo/239834997/beach-11957.mp4?width=640&hash=5a5a9c6b9c2b9a1c2b" type="video/mp4">
-</video>
-
-<div class="overlay"></div>
+<div class="bg"></div>
+<div class="wave"></div>
 
 <div class="container">
 <h1>Pirro Skapeta</h1>
